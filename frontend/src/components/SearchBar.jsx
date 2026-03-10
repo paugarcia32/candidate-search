@@ -9,13 +9,13 @@ export default function SearchBar({ onResults, onLoading }) {
 
     onLoading(true);
     try {
-      const res = await fetch("/api/search", {
+      const res = await fetch("/api/v1/candidates/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query, top_k: 5 }),
       });
       const data = await res.json();
-      onResults(data.results);
+      onResults(data);
     } catch (err) {
       console.error(err);
       onResults([]);

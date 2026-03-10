@@ -1,7 +1,7 @@
 import json
 from pgvector.psycopg2 import register_vector
-from db import get_conn
-from embeddings import get_embedding
+from app.database import get_conn
+from app.utils.embeddings import get_embedding
 
 with open("data/candidates.json", "r", encoding="utf-8") as f:
     candidates = json.load(f)

@@ -3,9 +3,6 @@ __pycache__/
 *.py[cod]
 .venv/
 
-# ChromaDB
-backend/chroma_db/
-
 # Environment
 .env
 

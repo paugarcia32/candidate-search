@@ -1,6 +1,7 @@
 from pgvector.psycopg2 import register_vector
-from db import get_conn
-from embeddings import get_embedding
+
+from app.database import get_conn
+from app.utils.embeddings import get_embedding
 
 
 def search_candidates(query: str, top_k: int) -> list[dict]:
@@ -11,7 +12,7 @@ def search_candidates(query: str, top_k: int) -> list[dict]:
         cur = conn.cursor()
         cur.execute("""
             SELECT
-                name, photo, location, email, phone, summary,
+                id, name, photo, location, email, phone, summary,
                 experience, education, certifications,
                 1 - (embedding <=> %s::vector) AS score
             FROM candidates
@@ -22,15 +23,16 @@ def search_candidates(query: str, top_k: int) -> list[dict]:
 
     candidates = []
     for row in rows:
-        name, photo, location, email, phone, summary, \
+        id_, name, photo, location, email, phone, summary, \
             experience, education, certifications, score = row
         candidates.append({
+            "id": id_,
             "name": name,
             "photo": photo or "",
             "location": location or "",
             "email": email or "",
             "phone": phone or "",
-            "summary": summary,
+            "summary": summary or "",
             "experience": experience if isinstance(experience, list) else [],
             "education": education if isinstance(education, list) else [],
             "certifications": certifications if isinstance(certifications, list) else [],
