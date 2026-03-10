@@ -2,61 +2,453 @@
   {
     "id": "1",
     "name": "Ana García",
-    "summary": "Backend developer with 5 years of experience in Python and FastAPI. Has worked at fintech startups and is an expert in REST architectures and PostgreSQL databases."
+    "photo": "https://randomuser.me/api/portraits/women/44.jpg",
+    "location": "Madrid, España",
+    "email": "ana.garcia@email.com",
+    "phone": "+34 612 345 678",
+    "summary": "Backend developer with 5 years of experience in Python and FastAPI. Expert in REST architectures and PostgreSQL databases. Passionate about clean code and performance.",
+    "experience": [
+      {
+        "company": "Payflow",
+        "role": "Senior Backend Developer",
+        "start": "2022-03",
+        "end": null,
+        "description": "Built and maintained payment processing microservices in Python and FastAPI. Reduced API latency by 40% through query optimization and caching strategies."
+      },
+      {
+        "company": "Velneo",
+        "role": "Backend Developer",
+        "start": "2019-06",
+        "end": "2022-02",
+        "description": "Developed RESTful APIs and integrated third-party financial services. Worked with PostgreSQL and Redis in a high-availability environment."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidad Complutense de Madrid",
+        "degree": "Grado en Ingeniería Informática",
+        "start": "2015",
+        "end": "2019"
+      }
+    ],
+    "certifications": [
+      { "name": "AWS Certified Developer – Associate", "issuer": "Amazon Web Services", "year": 2023 }
+    ]
   },
   {
     "id": "2",
     "name": "Carlos López",
-    "summary": "Fullstack engineer with experience in React and Node.js. Has led teams of 4 people and has a background in e-commerce and SaaS platforms."
+    "photo": "https://randomuser.me/api/portraits/men/32.jpg",
+    "location": "Barcelona, España",
+    "email": "carlos.lopez@email.com",
+    "phone": "+34 633 456 789",
+    "summary": "Fullstack engineer with experience in React and Node.js. Has led teams of 4 people and has a background in e-commerce and SaaS platforms.",
+    "experience": [
+      {
+        "company": "Factorial HR",
+        "role": "Tech Lead",
+        "start": "2021-09",
+        "end": null,
+        "description": "Led a team of 4 engineers building HR SaaS features with React and Node.js. Drove architecture decisions and code review culture."
+      },
+      {
+        "company": "Glovo",
+        "role": "Fullstack Developer",
+        "start": "2019-01",
+        "end": "2021-08",
+        "description": "Developed internal tools and customer-facing features for the e-commerce platform. Worked with React, Express.js, and PostgreSQL."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universitat Politècnica de Catalunya",
+        "degree": "Grado en Ingeniería de Software",
+        "start": "2014",
+        "end": "2018"
+      }
+    ],
+    "certifications": [
+      { "name": "Professional Scrum Master I (PSM I)", "issuer": "Scrum.org", "year": 2022 }
+    ]
   },
   {
     "id": "3",
     "name": "María Fernández",
-    "summary": "Data scientist with 4 years of experience in machine learning and Python. Skilled in scikit-learn, pandas, and building predictive models for retail analytics."
+    "photo": "https://randomuser.me/api/portraits/women/68.jpg",
+    "location": "Valencia, España",
+    "email": "maria.fernandez@email.com",
+    "phone": "+34 654 567 890",
+    "summary": "Data scientist with 4 years of experience in machine learning and Python. Skilled in scikit-learn, pandas, and building predictive models for retail analytics.",
+    "experience": [
+      {
+        "company": "Mercadona Tech",
+        "role": "Data Scientist",
+        "start": "2021-04",
+        "end": null,
+        "description": "Built demand forecasting models using scikit-learn and XGBoost, reducing stock-outs by 18%. Developed automated data pipelines with pandas and Airflow."
+      },
+      {
+        "company": "Accenture",
+        "role": "Junior Data Analyst",
+        "start": "2019-09",
+        "end": "2021-03",
+        "description": "Analysed retail client data and created dashboards in Power BI and Python. Supported ML model deployment in Azure."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universitat de València",
+        "degree": "Máster en Ciencia de Datos",
+        "start": "2018",
+        "end": "2019"
+      },
+      {
+        "institution": "Universitat de València",
+        "degree": "Grado en Matemáticas",
+        "start": "2014",
+        "end": "2018"
+      }
+    ],
+    "certifications": [
+      { "name": "Google Professional Data Engineer", "issuer": "Google Cloud", "year": 2023 },
+      { "name": "TensorFlow Developer Certificate", "issuer": "Google", "year": 2022 }
+    ]
   },
   {
     "id": "4",
     "name": "Javier Torres",
-    "summary": "DevOps engineer specialized in Kubernetes and CI/CD pipelines. Has managed cloud infrastructure on AWS for high-traffic applications and is proficient in Terraform."
+    "photo": "https://randomuser.me/api/portraits/men/75.jpg",
+    "location": "Bilbao, España",
+    "email": "javier.torres@email.com",
+    "phone": "+34 677 678 901",
+    "summary": "DevOps engineer specialized in Kubernetes and CI/CD pipelines. Has managed cloud infrastructure on AWS for high-traffic applications and is proficient in Terraform.",
+    "experience": [
+      {
+        "company": "BBVA Next Technologies",
+        "role": "Senior DevOps Engineer",
+        "start": "2020-06",
+        "end": null,
+        "description": "Managed Kubernetes clusters on AWS EKS for banking applications serving millions of users. Designed GitOps-based CI/CD pipelines with ArgoCD and GitHub Actions."
+      },
+      {
+        "company": "Inetum",
+        "role": "Systems Engineer",
+        "start": "2017-03",
+        "end": "2020-05",
+        "description": "Maintained on-premises Linux infrastructure and migrated legacy services to AWS. Automated provisioning with Terraform and Ansible."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidad del País Vasco",
+        "degree": "Grado en Ingeniería de Telecomunicación",
+        "start": "2013",
+        "end": "2017"
+      }
+    ],
+    "certifications": [
+      { "name": "AWS Certified Solutions Architect – Professional", "issuer": "Amazon Web Services", "year": 2022 },
+      { "name": "Certified Kubernetes Administrator (CKA)", "issuer": "CNCF", "year": 2021 }
+    ]
   },
   {
     "id": "5",
     "name": "Laura Sánchez",
-    "summary": "Frontend developer with 3 years of experience building responsive UIs with React and TypeScript. Passionate about accessibility and design systems."
+    "photo": "https://randomuser.me/api/portraits/women/12.jpg",
+    "location": "Sevilla, España",
+    "email": "laura.sanchez@email.com",
+    "phone": "+34 698 789 012",
+    "summary": "Frontend developer with 3 years of experience building responsive UIs with React and TypeScript. Passionate about accessibility and design systems.",
+    "experience": [
+      {
+        "company": "Cabify",
+        "role": "Frontend Developer",
+        "start": "2022-01",
+        "end": null,
+        "description": "Built and maintained the design system in React and TypeScript used across 6 product teams. Improved WCAG 2.1 AA compliance across the main web app."
+      },
+      {
+        "company": "Freelance",
+        "role": "Frontend Developer",
+        "start": "2020-09",
+        "end": "2021-12",
+        "description": "Developed landing pages and web apps for small businesses using React, Next.js, and Tailwind CSS."
+      }
+    ],
+    "education": [
+      {
+        "institution": "IES Polígono Sur",
+        "degree": "CFGS Desarrollo de Aplicaciones Web (DAW)",
+        "start": "2018",
+        "end": "2020"
+      }
+    ],
+    "certifications": [
+      { "name": "Certified Web Accessibility Specialist (WAS)", "issuer": "IAAP", "year": 2023 }
+    ]
   },
   {
     "id": "6",
     "name": "Andrés Martínez",
-    "summary": "Mobile developer with expertise in React Native and Flutter. Has shipped apps with over 100k downloads on both iOS and Android platforms."
+    "photo": "https://randomuser.me/api/portraits/men/18.jpg",
+    "location": "Málaga, España",
+    "email": "andres.martinez@email.com",
+    "phone": "+34 611 890 123",
+    "summary": "Mobile developer with expertise in React Native and Flutter. Has shipped apps with over 100k downloads on both iOS and Android platforms.",
+    "experience": [
+      {
+        "company": "Klikin",
+        "role": "Mobile Developer",
+        "start": "2021-05",
+        "end": null,
+        "description": "Developed and shipped a React Native restaurant management app (100k+ downloads). Integrated push notifications, offline sync, and Stripe payments."
+      },
+      {
+        "company": "NTT Data",
+        "role": "Junior Mobile Developer",
+        "start": "2019-07",
+        "end": "2021-04",
+        "description": "Built Flutter apps for banking clients on iOS and Android. Implemented biometric authentication and BLE integrations."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidad de Málaga",
+        "degree": "Grado en Ingeniería Informática",
+        "start": "2015",
+        "end": "2019"
+      }
+    ],
+    "certifications": [
+      { "name": "Google Associate Android Developer", "issuer": "Google", "year": 2022 }
+    ]
   },
   {
     "id": "7",
     "name": "Sofía Ruiz",
-    "summary": "Data engineer with experience building ETL pipelines using Apache Spark and Airflow. Has worked in the healthcare sector processing large volumes of structured and unstructured data."
+    "photo": "https://randomuser.me/api/portraits/women/29.jpg",
+    "location": "Zaragoza, España",
+    "email": "sofia.ruiz@email.com",
+    "phone": "+34 622 901 234",
+    "summary": "Data engineer with experience building ETL pipelines using Apache Spark and Airflow. Has worked in the healthcare sector processing large volumes of structured and unstructured data.",
+    "experience": [
+      {
+        "company": "Quirónsalud",
+        "role": "Data Engineer",
+        "start": "2020-10",
+        "end": null,
+        "description": "Designed and maintained ETL pipelines processing 50M+ daily health records using Spark and Airflow on Azure Databricks."
+      },
+      {
+        "company": "Indra",
+        "role": "Data Engineer Junior",
+        "start": "2018-09",
+        "end": "2020-09",
+        "description": "Built data integration workflows for public sector clients using Talend and SQL Server. Migrated legacy batch jobs to Apache Kafka streaming."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidad de Zaragoza",
+        "degree": "Grado en Ingeniería Informática",
+        "start": "2014",
+        "end": "2018"
+      }
+    ],
+    "certifications": [
+      { "name": "Databricks Certified Associate Developer for Apache Spark", "issuer": "Databricks", "year": 2022 },
+      { "name": "Microsoft Certified: Azure Data Engineer Associate", "issuer": "Microsoft", "year": 2023 }
+    ]
   },
   {
     "id": "8",
     "name": "Diego Herrera",
-    "summary": "Backend developer specializing in Java and Spring Boot. Has 6 years of experience building microservices for banking and insurance companies."
+    "photo": "https://randomuser.me/api/portraits/men/52.jpg",
+    "location": "Madrid, España",
+    "email": "diego.herrera@email.com",
+    "phone": "+34 644 012 345",
+    "summary": "Backend developer specializing in Java and Spring Boot. Has 6 years of experience building microservices for banking and insurance companies.",
+    "experience": [
+      {
+        "company": "Mapfre",
+        "role": "Senior Java Developer",
+        "start": "2021-02",
+        "end": null,
+        "description": "Led migration of monolithic insurance platform to Spring Boot microservices. Introduced event-driven architecture using Apache Kafka."
+      },
+      {
+        "company": "Santander Global Tech",
+        "role": "Java Developer",
+        "start": "2018-04",
+        "end": "2021-01",
+        "description": "Developed core banking APIs in Java and Spring Boot. Worked with Oracle DB and implemented OAuth2 security flows."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidad Autónoma de Madrid",
+        "degree": "Grado en Ingeniería Informática",
+        "start": "2014",
+        "end": "2018"
+      }
+    ],
+    "certifications": [
+      { "name": "Oracle Certified Professional: Java SE 17 Developer", "issuer": "Oracle", "year": 2022 },
+      { "name": "Spring Professional Certification", "issuer": "VMware", "year": 2021 }
+    ]
   },
   {
     "id": "9",
     "name": "Valentina Gómez",
-    "summary": "Full-stack developer with strong skills in Vue.js and Django. Has worked on government digital transformation projects and is experienced with Docker and Linux environments."
+    "photo": "https://randomuser.me/api/portraits/women/55.jpg",
+    "location": "A Coruña, España",
+    "email": "valentina.gomez@email.com",
+    "phone": "+34 655 123 456",
+    "summary": "Full-stack developer with strong skills in Vue.js and Django. Has worked on government digital transformation projects and is experienced with Docker and Linux environments.",
+    "experience": [
+      {
+        "company": "Xunta de Galicia (AMTEGA)",
+        "role": "Full-Stack Developer",
+        "start": "2020-03",
+        "end": null,
+        "description": "Built citizen-facing digital services using Vue.js and Django REST Framework. Containerised services with Docker and deployed on OpenShift."
+      },
+      {
+        "company": "Altia Consultores",
+        "role": "Web Developer",
+        "start": "2017-09",
+        "end": "2020-02",
+        "description": "Developed web applications for public sector clients using Django and jQuery. Managed Linux servers and PostgreSQL databases."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidade da Coruña",
+        "degree": "Grado en Ingeniería Informática",
+        "start": "2013",
+        "end": "2017"
+      }
+    ],
+    "certifications": [
+      { "name": "Red Hat Certified System Administrator (RHCSA)", "issuer": "Red Hat", "year": 2021 }
+    ]
   },
   {
     "id": "10",
     "name": "Mateo Jiménez",
-    "summary": "Cloud architect with certifications in AWS and GCP. Has designed multi-region architectures for SaaS startups and is experienced in cost optimization and security best practices."
+    "photo": "https://randomuser.me/api/portraits/men/62.jpg",
+    "location": "Madrid, España",
+    "email": "mateo.jimenez@email.com",
+    "phone": "+34 666 234 567",
+    "summary": "Cloud architect with certifications in AWS and GCP. Has designed multi-region architectures for SaaS startups and is experienced in cost optimization and security best practices.",
+    "experience": [
+      {
+        "company": "Typeform",
+        "role": "Cloud Architect",
+        "start": "2019-11",
+        "end": null,
+        "description": "Designed multi-region AWS architecture supporting 99.99% uptime SLA. Led cloud cost optimization initiative that saved $300k/year. Defined security baseline for SOC 2 compliance."
+      },
+      {
+        "company": "Telefónica Tech",
+        "role": "Cloud Engineer",
+        "start": "2016-06",
+        "end": "2019-10",
+        "description": "Migrated on-premises workloads to AWS and GCP. Implemented infrastructure-as-code with Terraform and built monitoring stacks with Prometheus and Grafana."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universidad Carlos III de Madrid",
+        "degree": "Grado en Ingeniería Telemática",
+        "start": "2012",
+        "end": "2016"
+      }
+    ],
+    "certifications": [
+      { "name": "AWS Certified Solutions Architect – Professional", "issuer": "Amazon Web Services", "year": 2023 },
+      { "name": "Google Cloud Professional Cloud Architect", "issuer": "Google Cloud", "year": 2022 },
+      { "name": "Certified Cloud Security Professional (CCSP)", "issuer": "ISC2", "year": 2023 }
+    ]
   },
   {
     "id": "11",
     "name": "Isabella Morales",
-    "summary": "Machine learning engineer focused on NLP and LLMs. Has fine-tuned transformer models and deployed inference APIs using FastAPI and Hugging Face on production systems."
+    "photo": "https://randomuser.me/api/portraits/women/90.jpg",
+    "location": "Barcelona, España",
+    "email": "isabella.morales@email.com",
+    "phone": "+34 677 345 678",
+    "summary": "Machine learning engineer focused on NLP and LLMs. Has fine-tuned transformer models and deployed inference APIs using FastAPI and Hugging Face on production systems.",
+    "experience": [
+      {
+        "company": "Flywire",
+        "role": "ML Engineer",
+        "start": "2022-01",
+        "end": null,
+        "description": "Fine-tuned BERT and LLaMA models for financial document classification. Deployed inference APIs with FastAPI on AWS SageMaker, serving 10M+ requests/month."
+      },
+      {
+        "company": "Barcelona Supercomputing Center",
+        "role": "Research Engineer",
+        "start": "2020-09",
+        "end": "2021-12",
+        "description": "Contributed to multilingual NLP research using Hugging Face Transformers. Ran large-scale training jobs on HPC clusters with SLURM."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universitat Politècnica de Catalunya",
+        "degree": "Máster en Inteligencia Artificial",
+        "start": "2019",
+        "end": "2020"
+      },
+      {
+        "institution": "Universitat de Barcelona",
+        "degree": "Grado en Matemáticas",
+        "start": "2015",
+        "end": "2019"
+      }
+    ],
+    "certifications": [
+      { "name": "DeepLearning.AI NLP Specialization", "issuer": "Coursera / DeepLearning.AI", "year": 2021 },
+      { "name": "Hugging Face NLP Course Certificate", "issuer": "Hugging Face", "year": 2022 }
+    ]
   },
   {
     "id": "12",
     "name": "Tomás Castillo",
-    "summary": "QA engineer with 5 years of experience in test automation using Selenium, Pytest, and Cypress. Has implemented end-to-end testing frameworks for agile teams in telecommunications."
+    "photo": "https://randomuser.me/api/portraits/men/88.jpg",
+    "location": "Murcia, España",
+    "email": "tomas.castillo@email.com",
+    "phone": "+34 688 456 789",
+    "summary": "QA engineer with 5 years of experience in test automation using Selenium, Pytest, and Cypress. Has implemented end-to-end testing frameworks for agile teams in telecommunications.",
+    "experience": [
+      {
+        "company": "Vodafone España",
+        "role": "Senior QA Automation Engineer",
+        "start": "2021-06",
+        "end": null,
+        "description": "Built end-to-end test suites in Cypress and Pytest for telecom billing systems. Integrated automated tests into CI/CD pipelines reducing release cycle from 2 weeks to 3 days."
+      },
+      {
+        "company": "Atento",
+        "role": "QA Engineer",
+        "start": "2018-03",
+        "end": "2021-05",
+        "description": "Designed automated regression tests with Selenium and Java for CRM platforms. Coordinated UAT with business stakeholders."
+      }
+    ],
+    "education": [
+      {
+        "institution": "CIFP Carlos III",
+        "degree": "CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)",
+        "start": "2016",
+        "end": "2018"
+      }
+    ],
+    "certifications": [
+      { "name": "ISTQB Certified Tester – Foundation Level", "issuer": "ISTQB", "year": 2019 },
+      { "name": "ISTQB Certified Tester – Advanced Level Test Automation Engineer", "issuer": "ISTQB", "year": 2022 }
+    ]
   }
 ]

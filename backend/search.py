@@ -1,3 +1,4 @@
+import json
 import chromadb
 from embeddings import get_embedding
 
@@ -17,11 +18,16 @@ def search_candidates(query: str, top_k: int) -> list[dict]:
     for metadata, distance in zip(results["metadatas"][0], results["distances"][0]):
         # ChromaDB returns L2 distance; convert to a similarity score in [0, 1]
         score = round(1 / (1 + distance), 4)
-        candidates.append(
-            {
-                "name": metadata["name"],
-                "score": score,
-                "summary": metadata["summary"],
-            }
-        )
+        candidates.append({
+            "name": metadata["name"],
+            "photo": metadata.get("photo", ""),
+            "location": metadata.get("location", ""),
+            "email": metadata.get("email", ""),
+            "phone": metadata.get("phone", ""),
+            "score": score,
+            "summary": metadata["summary"],
+            "experience": json.loads(metadata.get("experience", "[]")),
+            "education": json.loads(metadata.get("education", "[]")),
+            "certifications": json.loads(metadata.get("certifications", "[]")),
+        })
     return candidates
