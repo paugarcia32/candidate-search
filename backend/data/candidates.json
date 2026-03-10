@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "name": "Ana García",
+    "summary": "Backend developer with 5 years of experience in Python and FastAPI. Has worked at fintech startups and is an expert in REST architectures and PostgreSQL databases."
+  },
+  {
+    "id": "2",
+    "name": "Carlos López",
+    "summary": "Fullstack engineer with experience in React and Node.js. Has led teams of 4 people and has a background in e-commerce and SaaS platforms."
+  },
+  {
+    "id": "3",
+    "name": "María Fernández",
+    "summary": "Data scientist with 4 years of experience in machine learning and Python. Skilled in scikit-learn, pandas, and building predictive models for retail analytics."
+  },
+  {
+    "id": "4",
+    "name": "Javier Torres",
+    "summary": "DevOps engineer specialized in Kubernetes and CI/CD pipelines. Has managed cloud infrastructure on AWS for high-traffic applications and is proficient in Terraform."
+  },
+  {
+    "id": "5",
+    "name": "Laura Sánchez",
+    "summary": "Frontend developer with 3 years of experience building responsive UIs with React and TypeScript. Passionate about accessibility and design systems."
+  },
+  {
+    "id": "6",
+    "name": "Andrés Martínez",
+    "summary": "Mobile developer with expertise in React Native and Flutter. Has shipped apps with over 100k downloads on both iOS and Android platforms."
+  },
+  {
+    "id": "7",
+    "name": "Sofía Ruiz",
+    "summary": "Data engineer with experience building ETL pipelines using Apache Spark and Airflow. Has worked in the healthcare sector processing large volumes of structured and unstructured data."
+  },
+  {
+    "id": "8",
+    "name": "Diego Herrera",
+    "summary": "Backend developer specializing in Java and Spring Boot. Has 6 years of experience building microservices for banking and insurance companies."
+  },
+  {
+    "id": "9",
+    "name": "Valentina Gómez",
+    "summary": "Full-stack developer with strong skills in Vue.js and Django. Has worked on government digital transformation projects and is experienced with Docker and Linux environments."
+  },
+  {
+    "id": "10",
+    "name": "Mateo Jiménez",
+    "summary": "Cloud architect with certifications in AWS and GCP. Has designed multi-region architectures for SaaS startups and is experienced in cost optimization and security best practices."
+  },
+  {
+    "id": "11",
+    "name": "Isabella Morales",
+    "summary": "Machine learning engineer focused on NLP and LLMs. Has fine-tuned transformer models and deployed inference APIs using FastAPI and Hugging Face on production systems."
+  },
+  {
+    "id": "12",
+    "name": "Tomás Castillo",
+    "summary": "QA engineer with 5 years of experience in test automation using Selenium, Pytest, and Cypress. Has implemented end-to-end testing frameworks for agile teams in telecommunications."
+  }
+]
