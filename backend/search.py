@@ -1,33 +1,39 @@
-import json
-import chromadb
+from pgvector.psycopg2 import register_vector
+from db import get_conn
 from embeddings import get_embedding
-
-chroma_client = chromadb.PersistentClient(path="./chroma_db")
-collection = chroma_client.get_or_create_collection(name="candidates")
 
 
 def search_candidates(query: str, top_k: int) -> list[dict]:
     query_embedding = get_embedding(query)
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=top_k,
-        include=["metadatas", "distances"],
-    )
+
+    with get_conn() as conn:
+        register_vector(conn)
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT
+                name, photo, location, email, phone, summary,
+                experience, education, certifications,
+                1 - (embedding <=> %s::vector) AS score
+            FROM candidates
+            ORDER BY embedding <=> %s::vector
+            LIMIT %s
+        """, (query_embedding, query_embedding, top_k))
+        rows = cur.fetchall()
 
     candidates = []
-    for metadata, distance in zip(results["metadatas"][0], results["distances"][0]):
-        # ChromaDB returns L2 distance; convert to a similarity score in [0, 1]
-        score = round(1 / (1 + distance), 4)
+    for row in rows:
+        name, photo, location, email, phone, summary, \
+            experience, education, certifications, score = row
         candidates.append({
-            "name": metadata["name"],
-            "photo": metadata.get("photo", ""),
-            "location": metadata.get("location", ""),
-            "email": metadata.get("email", ""),
-            "phone": metadata.get("phone", ""),
-            "score": score,
-            "summary": metadata["summary"],
-            "experience": json.loads(metadata.get("experience", "[]")),
-            "education": json.loads(metadata.get("education", "[]")),
-            "certifications": json.loads(metadata.get("certifications", "[]")),
+            "name": name,
+            "photo": photo or "",
+            "location": location or "",
+            "email": email or "",
+            "phone": phone or "",
+            "summary": summary,
+            "experience": experience if isinstance(experience, list) else [],
+            "education": education if isinstance(education, list) else [],
+            "certifications": certifications if isinstance(certifications, list) else [],
+            "score": round(float(score), 4),
         })
     return candidates

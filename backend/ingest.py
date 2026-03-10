@@ -1,47 +1,83 @@
 import json
-import chromadb
+from pgvector.psycopg2 import register_vector
+from db import get_conn
 from embeddings import get_embedding
-
-chroma_client = chromadb.PersistentClient(path="./chroma_db")
-collection = chroma_client.get_or_create_collection(name="candidates")
 
 with open("data/candidates.json", "r", encoding="utf-8") as f:
     candidates = json.load(f)
 
 print(f"Ingesting {len(candidates)} candidates...")
 
-for candidate in candidates:
-    # Build a rich text for embedding: summary + experience + education + certs
-    parts = [candidate["summary"]]
+# Create extension first in its own transaction, then register the vector type
+with get_conn() as conn:
+    conn.cursor().execute("CREATE EXTENSION IF NOT EXISTS vector")
 
-    for exp in candidate.get("experience", []):
-        parts.append(f"{exp['role']} at {exp['company']}: {exp['description']}")
+with get_conn() as conn:
+    register_vector(conn)
+    cur = conn.cursor()
 
-    for edu in candidate.get("education", []):
-        parts.append(f"{edu['degree']} at {edu['institution']}")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS candidates (
+            id             TEXT PRIMARY KEY,
+            name           TEXT NOT NULL,
+            photo          TEXT,
+            location       TEXT,
+            email          TEXT,
+            phone          TEXT,
+            summary        TEXT,
+            experience     JSONB    DEFAULT '[]',
+            education      JSONB    DEFAULT '[]',
+            certifications JSONB    DEFAULT '[]',
+            embedding      vector(384)
+        )
+    """)
 
-    for cert in candidate.get("certifications", []):
-        parts.append(f"Certification: {cert['name']} by {cert['issuer']}")
+    for candidate in candidates:
+        parts = [candidate["summary"]]
+        for exp in candidate.get("experience", []):
+            parts.append(f"{exp['role']} at {exp['company']}: {exp['description']}")
+        for edu in candidate.get("education", []):
+            parts.append(f"{edu['degree']} at {edu['institution']}")
+        for cert in candidate.get("certifications", []):
+            parts.append(f"Certification: {cert['name']} by {cert['issuer']}")
 
-    embed_text = " | ".join(parts)
-    embedding = get_embedding(embed_text)
+        embedding = get_embedding(" | ".join(parts))
 
-    collection.upsert(
-        ids=[candidate["id"]],
-        embeddings=[embedding],
-        metadatas=[{
-            "name": candidate["name"],
-            "photo": candidate.get("photo", ""),
-            "location": candidate.get("location", ""),
-            "email": candidate.get("email", ""),
-            "phone": candidate.get("phone", ""),
-            "summary": candidate["summary"],
-            # Arrays stored as JSON strings (ChromaDB only supports flat metadata)
-            "experience": json.dumps(candidate.get("experience", []), ensure_ascii=False),
-            "education": json.dumps(candidate.get("education", []), ensure_ascii=False),
-            "certifications": json.dumps(candidate.get("certifications", []), ensure_ascii=False),
-        }],
-    )
-    print(f"  Ingested: {candidate['name']}")
+        cur.execute("""
+            INSERT INTO candidates
+                (id, name, photo, location, email, phone, summary,
+                 experience, education, certifications, embedding)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (id) DO UPDATE SET
+                name           = EXCLUDED.name,
+                photo          = EXCLUDED.photo,
+                location       = EXCLUDED.location,
+                email          = EXCLUDED.email,
+                phone          = EXCLUDED.phone,
+                summary        = EXCLUDED.summary,
+                experience     = EXCLUDED.experience,
+                education      = EXCLUDED.education,
+                certifications = EXCLUDED.certifications,
+                embedding      = EXCLUDED.embedding
+        """, (
+            candidate["id"],
+            candidate["name"],
+            candidate.get("photo", ""),
+            candidate.get("location", ""),
+            candidate.get("email", ""),
+            candidate.get("phone", ""),
+            candidate["summary"],
+            json.dumps(candidate.get("experience", []), ensure_ascii=False),
+            json.dumps(candidate.get("education", []), ensure_ascii=False),
+            json.dumps(candidate.get("certifications", []), ensure_ascii=False),
+            embedding,
+        ))
+        print(f"  Ingested: {candidate['name']}")
+
+    cur.execute("""
+        CREATE INDEX IF NOT EXISTS candidates_embedding_idx
+        ON candidates USING ivfflat (embedding vector_cosine_ops)
+        WITH (lists = 10)
+    """)
 
 print("Done.")
