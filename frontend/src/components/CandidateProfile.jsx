@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import CreateCandidateModal from "./CreateCandidateModal";
+import "../styles/CandidateProfile.css";
 
 function formatPeriod(start, end) {
   if (!start) return "";
@@ -44,7 +45,6 @@ export default function CandidateProfile() {
 
   function handleEdited() {
     setShowEdit(false);
-    // Refetch to show updated data
     setLoading(true);
     fetch(`/api/v1/candidates/${id}`)
       .then((res) => res.json())
@@ -52,14 +52,12 @@ export default function CandidateProfile() {
       .finally(() => setLoading(false));
   }
 
-  const containerStyle = { maxWidth: "760px", margin: "40px auto", padding: "0 16px", fontFamily: "sans-serif" };
-
-  if (loading) return <div style={containerStyle}><p style={{ color: "#555" }}>Loading...</p></div>;
-  if (notFound) return <div style={containerStyle}><p style={{ color: "#555" }}>Candidate not found.</p></div>;
+  if (loading) return <div className="page-container profile-page"><p className="text-subtle">Loading...</p></div>;
+  if (notFound) return <div className="page-container profile-page"><p className="text-subtle">Candidate not found.</p></div>;
   if (!candidate) return null;
 
   return (
-    <div style={containerStyle}>
+    <div className="page-container profile-page">
       {showEdit && (
         <CreateCandidateModal
           candidate={candidate}
@@ -69,89 +67,35 @@ export default function CandidateProfile() {
       )}
 
       {/* Back button + actions */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-        <button
-          onClick={() => navigate(-1)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "#6b7280",
-            fontSize: "14px",
-            padding: 0,
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-          }}
-        >
+      <div className="profile__nav">
+        <button onClick={() => navigate(-1)} className="btn btn-ghost">
           ← Back
         </button>
 
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+        <div className="profile__nav-actions">
           {confirmDelete ? (
             <>
-              <span style={{ fontSize: "13px", color: "#374151" }}>Are you sure?</span>
+              <span className="confirm-label">Are you sure?</span>
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                style={{
-                  padding: "6px 14px",
-                  border: "none",
-                  borderRadius: "6px",
-                  background: "#ef4444",
-                  color: "#fff",
-                  fontSize: "13px",
-                  fontWeight: "600",
-                  cursor: deleting ? "default" : "pointer",
-                }}
+                className="btn btn-danger-filled"
               >
                 {deleting ? "Deleting..." : "Yes, delete"}
               </button>
               <button
                 onClick={() => setConfirmDelete(false)}
-                style={{
-                  padding: "6px 14px",
-                  border: "1px solid #e5e7eb",
-                  borderRadius: "6px",
-                  background: "#fff",
-                  color: "#374151",
-                  fontSize: "13px",
-                  cursor: "pointer",
-                }}
+                className="btn btn-secondary btn-sm"
               >
                 Cancel
               </button>
             </>
           ) : (
             <>
-              <button
-                onClick={() => setShowEdit(true)}
-                style={{
-                  padding: "6px 16px",
-                  border: "1px solid #e5e7eb",
-                  borderRadius: "6px",
-                  background: "#fff",
-                  color: "#374151",
-                  fontSize: "13px",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                }}
-              >
+              <button onClick={() => setShowEdit(true)} className="btn btn-secondary btn-sm">
                 Edit
               </button>
-              <button
-                onClick={() => setConfirmDelete(true)}
-                style={{
-                  padding: "6px 16px",
-                  border: "1px solid #fca5a5",
-                  borderRadius: "6px",
-                  background: "#fff",
-                  color: "#ef4444",
-                  fontSize: "13px",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                }}
-              >
+              <button onClick={() => setConfirmDelete(true)} className="btn btn-danger">
                 Delete
               </button>
             </>
@@ -160,33 +104,24 @@ export default function CandidateProfile() {
       </div>
 
       {/* Header */}
-      <div style={{ display: "flex", gap: "20px", alignItems: "flex-start", marginBottom: "24px" }}>
+      <div className="profile__header">
         {candidate.photo && (
           <img
             src={candidate.photo}
             alt={candidate.name}
-            style={{ width: "80px", height: "80px", borderRadius: "50%", objectFit: "cover", flexShrink: 0 }}
+            className="profile__avatar"
           />
         )}
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
-            <h1 style={{ fontSize: "24px", margin: 0 }}>{candidate.name}</h1>
+        <div className="profile__header-body">
+          <div className="profile__name-row">
+            <h1 className="profile__name">{candidate.name}</h1>
             {score !== null && (
-              <span
-                style={{
-                  backgroundColor: "#dbeafe",
-                  color: "#1d4ed8",
-                  padding: "3px 12px",
-                  borderRadius: "12px",
-                  fontSize: "13px",
-                  fontWeight: "600",
-                }}
-              >
+              <span className="badge-accent">
                 {(score * 100).toFixed(1)}% match
               </span>
             )}
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "8px", fontSize: "14px", color: "#6b7280" }}>
+          <div className="profile__meta">
             {candidate.location && <span>📍 {candidate.location}</span>}
             {candidate.email && <span>✉️ {candidate.email}</span>}
             {candidate.phone && <span>📞 {candidate.phone}</span>}
@@ -196,26 +131,22 @@ export default function CandidateProfile() {
 
       {/* Summary */}
       {candidate.summary && (
-        <p style={{ color: "#374151", lineHeight: "1.6", fontSize: "15px", marginBottom: "32px" }}>
-          {candidate.summary}
-        </p>
+        <p className="profile__summary">{candidate.summary}</p>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+      <div className="profile__sections">
         {/* Experience */}
         {candidate.experience?.length > 0 && (
           <section>
-            <h2 style={{ fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.05em", color: "#9ca3af", margin: "0 0 14px" }}>
-              Experience
-            </h2>
+            <h2 className="section-label">Experience</h2>
             {candidate.experience.map((exp, i) => (
-              <div key={i} style={{ marginBottom: "16px", paddingBottom: "16px", borderBottom: i < candidate.experience.length - 1 ? "1px solid #f3f4f6" : "none" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                  <strong style={{ fontSize: "15px" }}>{exp.role}</strong>
-                  <span style={{ fontSize: "13px", color: "#9ca3af" }}>{formatPeriod(exp.start, exp.end)}</span>
+              <div key={i} className="profile__entry">
+                <div className="profile__entry-header">
+                  <strong className="profile__entry-title">{exp.role}</strong>
+                  <span className="profile__entry-period">{formatPeriod(exp.start, exp.end)}</span>
                 </div>
-                <div style={{ fontSize: "14px", color: "#6b7280", margin: "2px 0 6px" }}>{exp.company}</div>
-                <div style={{ fontSize: "14px", color: "#374151", lineHeight: "1.6" }}>{exp.description}</div>
+                <div className="profile__entry-subtitle">{exp.company}</div>
+                <div className="profile__entry-body">{exp.description}</div>
               </div>
             ))}
           </section>
@@ -224,16 +155,14 @@ export default function CandidateProfile() {
         {/* Education */}
         {candidate.education?.length > 0 && (
           <section>
-            <h2 style={{ fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.05em", color: "#9ca3af", margin: "0 0 14px" }}>
-              Education
-            </h2>
+            <h2 className="section-label">Education</h2>
             {candidate.education.map((edu, i) => (
-              <div key={i} style={{ marginBottom: "12px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "4px" }}>
-                  <strong style={{ fontSize: "15px" }}>{edu.degree}</strong>
-                  <span style={{ fontSize: "13px", color: "#9ca3af" }}>{formatPeriod(edu.start, edu.end)}</span>
+              <div key={i} className="profile__entry">
+                <div className="profile__entry-header">
+                  <strong className="profile__entry-title">{edu.degree}</strong>
+                  <span className="profile__entry-period">{formatPeriod(edu.start, edu.end)}</span>
                 </div>
-                <div style={{ fontSize: "14px", color: "#6b7280" }}>{edu.institution}</div>
+                <div className="profile__entry-subtitle">{edu.institution}</div>
               </div>
             ))}
           </section>
@@ -242,25 +171,13 @@ export default function CandidateProfile() {
         {/* Certifications */}
         {candidate.certifications?.length > 0 && (
           <section>
-            <h2 style={{ fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.05em", color: "#9ca3af", margin: "0 0 14px" }}>
-              Certifications
-            </h2>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+            <h2 className="section-label">Certifications</h2>
+            <div className="cert-list">
               {candidate.certifications.map((cert, i) => (
-                <div
-                  key={i}
-                  style={{
-                    backgroundColor: "#f0fdf4",
-                    color: "#15803d",
-                    border: "1px solid #bbf7d0",
-                    padding: "6px 14px",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                  }}
-                >
-                  <div style={{ fontWeight: "500" }}>{cert.name}</div>
+                <div key={i} className="cert-badge">
+                  <div className="cert-badge__name">{cert.name}</div>
                   {(cert.issuer || cert.year) && (
-                    <div style={{ fontSize: "12px", color: "#16a34a", marginTop: "2px" }}>
+                    <div className="cert-badge__meta">
                       {[cert.issuer, cert.year].filter(Boolean).join(" · ")}
                     </div>
                   )}

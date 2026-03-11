@@ -1,0 +1,145 @@
+/* ── Profile page ────────────────────────────────────────── */
+.profile-page {
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-12);
+}
+
+.profile__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+}
+
+.profile__nav-actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.confirm-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.profile__header {
+  display: flex;
+  gap: var(--space-8);
+  align-items: flex-start;
+  margin-bottom: var(--space-9);
+}
+
+.profile__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.profile__header-body {
+  flex: 1;
+}
+
+.profile__name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.profile__name {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.profile__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+  margin-top: var(--space-3);
+  font-size: var(--font-size-base);
+  color: var(--color-text-subtle);
+}
+
+/* ── Summary ─────────────────────────────────────────────── */
+.profile__summary {
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-md);
+  margin-bottom: var(--space-11);
+}
+
+/* ── Sections ────────────────────────────────────────────── */
+.profile__sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+/* ── Entry (experience / education) ─────────────────────── */
+.profile__entry {
+  padding-bottom: var(--space-7);
+}
+
+.profile__entry:not(:last-child) {
+  border-bottom: 1px solid var(--color-border-subtle);
+  margin-bottom: var(--space-7);
+}
+
+.profile__entry-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.profile__entry-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.profile__entry-period {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.profile__entry-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-subtle);
+  margin: 2px 0 var(--space-2);
+}
+
+.profile__entry-body {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ── Certifications ──────────────────────────────────────── */
+.cert-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.cert-badge {
+  background-color: var(--color-success-bg);
+  color: var(--color-success-text);
+  border: 1px solid var(--color-success-border);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+}
+
+.cert-badge__name {
+  font-weight: var(--font-weight-medium);
+}
+
+.cert-badge__meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-success-muted);
+  margin-top: 2px;
+}

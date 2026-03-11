@@ -1,0 +1,263 @@
+/* ============================================================
+   GLOBAL.CSS — Reset, base typography, shared component classes
+   ============================================================ */
+
+@import './tokens.css';
+
+/* ── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ── Layout ─────────────────────────────────────────────── */
+.page-container {
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--content-padding);
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transition-base), color var(--transition-base),
+              border-color var(--transition-base), box-shadow var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* Primary — accent filled */
+.btn-primary {
+  padding: var(--space-3) var(--space-8);
+  background-color: var(--color-accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-accent-disabled);
+}
+
+/* Secondary — outlined */
+.btn-secondary {
+  padding: var(--space-3) var(--space-7);
+  background-color: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-surface-raised);
+  border-color: var(--color-border-strong);
+}
+
+/* Ghost — no bg, no border */
+.btn-ghost {
+  padding: 0;
+  background: none;
+  border-color: transparent;
+  color: var(--color-text-subtle);
+  font-weight: var(--font-weight-normal);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--color-text-primary);
+}
+
+/* Danger outlined */
+.btn-danger {
+  padding: var(--space-2) var(--space-7);
+  background-color: var(--color-surface);
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+  font-size: var(--font-size-sm);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--color-danger);
+  color: #fff;
+  border-color: var(--color-danger);
+}
+
+/* Danger filled */
+.btn-danger-filled {
+  padding: var(--space-2) var(--space-6);
+  background-color: var(--color-danger);
+  color: #fff;
+  border-color: transparent;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Accent outlined (add entry buttons) */
+.btn-accent-outline {
+  padding: var(--space-1) var(--space-6);
+  background-color: var(--color-surface);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  font-size: var(--font-size-sm);
+}
+
+.btn-accent-outline:hover:not(:disabled) {
+  background-color: var(--color-accent-subtle-bg);
+}
+
+/* Size modifier */
+.btn-sm {
+  padding: var(--space-2) var(--space-7);
+  font-size: var(--font-size-base);
+}
+
+/* ── Form ───────────────────────────────────────────────── */
+.form-field {
+  margin-bottom: var(--space-5);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-1);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.form-required {
+  color: var(--color-danger);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: var(--space-4) var(--space-4);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base),
+              background-color var(--transition-slow);
+  outline: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-subtle-bg);
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+/* ── Badge ──────────────────────────────────────────────── */
+.badge-accent {
+  display: inline-block;
+  padding: 2px var(--space-4);
+  background-color: var(--color-accent-subtle-bg);
+  color: var(--color-accent-subtle-text);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+/* ── Section label ──────────────────────────────────────── */
+.section-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-6);
+}
+
+/* ── Text utilities ─────────────────────────────────────── */
+.text-subtle {
+  color: var(--color-text-subtle);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+/* ── Theme toggle ───────────────────────────────────────── */
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-subtle);
+  flex-shrink: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.theme-toggle:hover {
+  background-color: var(--color-surface-raised);
+  color: var(--color-text-primary);
+}

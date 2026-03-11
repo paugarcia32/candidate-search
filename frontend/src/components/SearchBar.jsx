@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/SearchBar.css";
 
 export default function SearchBar({ onResults, onLoading }) {
   const [query, setQuery] = useState("");
@@ -25,32 +26,15 @@ export default function SearchBar({ onResults, onLoading }) {
   }
 
   return (
-    <form onSubmit={handleSearch} style={{ display: "flex", gap: "8px" }}>
+    <form className="search-form" onSubmit={handleSearch}>
       <input
         type="text"
+        className="form-input search-form__input"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="e.g. backend developer with Python experience"
-        style={{
-          flex: 1,
-          padding: "10px 14px",
-          fontSize: "16px",
-          border: "1px solid #ccc",
-          borderRadius: "6px",
-        }}
       />
-      <button
-        type="submit"
-        style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          backgroundColor: "#2563eb",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
+      <button type="submit" className="btn btn-primary search-form__btn">
         Search
       </button>
     </form>

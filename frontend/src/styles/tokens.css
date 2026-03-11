@@ -1,0 +1,150 @@
+/* ============================================================
+   TOKENS.CSS — Design tokens for Candidate Search
+   Light theme on :root, dark overrides on [data-theme="dark"]
+   ============================================================ */
+
+/* ── Light theme (default) ──────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --color-bg:             #FFFFFF;
+  --color-bg-subtle:      #F9FAFB;
+  --color-surface:        #FFFFFF;
+  --color-surface-raised: #F3F4F6;
+  --color-overlay:        rgba(0, 0, 0, 0.4);
+
+  /* Borders */
+  --color-border:         #E5E7EB;
+  --color-border-subtle:  #F3F4F6;
+  --color-border-strong:  #D1D5DB;
+
+  /* Text */
+  --color-text-primary:   #111827;
+  --color-text-secondary: #374151;
+  --color-text-subtle:    #6B7280;
+  --color-text-muted:     #9CA3AF;
+  --color-text-disabled:  #D1D5DB;
+  --color-text-inverse:   #FFFFFF;
+
+  /* Accent — Indigo */
+  --color-accent:             #6366F1;
+  --color-accent-hover:       #4F46E5;
+  --color-accent-subtle-bg:   #EEF2FF;
+  --color-accent-subtle-text: #4338CA;
+  --color-accent-disabled:    #A5B4FC;
+
+  /* Status — Success */
+  --color-success-bg:     #F0FDF4;
+  --color-success-text:   #15803D;
+  --color-success-border: #BBF7D0;
+  --color-success-muted:  #16A34A;
+
+  /* Status — Danger */
+  --color-danger:         #EF4444;
+  --color-danger-border:  #FCA5A5;
+
+  /* Typography */
+  --font-family:           'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-xs:          11px;
+  --font-size-sm:          13px;
+  --font-size-base:        14px;
+  --font-size-md:          15px;
+  --font-size-lg:          16px;
+  --font-size-xl:          17px;
+  --font-size-2xl:         20px;
+  --font-size-3xl:         24px;
+  --font-size-4xl:         28px;
+  --font-weight-normal:    400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  --letter-spacing-tight:  -0.15px;
+  --letter-spacing-wide:   0.05em;
+  --line-height-tight:     1.3;
+  --line-height-base:      1.5;
+  --line-height-relaxed:   1.6;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  6px;
+  --space-3:  8px;
+  --space-4:  10px;
+  --space-5:  12px;
+  --space-6:  14px;
+  --space-7:  16px;
+  --space-8:  20px;
+  --space-9:  24px;
+  --space-10: 28px;
+  --space-11: 32px;
+  --space-12: 40px;
+  --space-13: 60px;
+
+  /* Border radius */
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-none:  none;
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:    0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg:    0 4px 24px rgba(0, 0, 0, 0.12);
+  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.16);
+
+  /* Transitions */
+  --transition-fast: 0.1s ease;
+  --transition-base: 0.15s ease;
+  --transition-slow: 0.25s ease;
+
+  /* Layout */
+  --content-max-width: 760px;
+  --content-padding:   0 16px;
+
+  /* Z-index */
+  --z-modal: 1000;
+}
+
+/* ── Dark theme overrides ───────────────────────────────── */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --color-bg:             #1C1C1C;
+  --color-bg-subtle:      #242424;
+  --color-surface:        #2A2A2A;
+  --color-surface-raised: #333333;
+  --color-overlay:        rgba(0, 0, 0, 0.65);
+
+  /* Borders */
+  --color-border:         #3A3A3A;
+  --color-border-subtle:  #2E2E2E;
+  --color-border-strong:  #4A4A4A;
+
+  /* Text */
+  --color-text-primary:   #E5E5E5;
+  --color-text-secondary: #CFCFCF;
+  --color-text-subtle:    #A1A1A1;
+  --color-text-muted:     #737373;
+  --color-text-disabled:  #525252;
+  --color-text-inverse:   #111827;
+
+  /* Accent — Indigo (dark-adapted) */
+  --color-accent-hover:       #818CF8;
+  --color-accent-subtle-bg:   rgba(99, 102, 241, 0.15);
+  --color-accent-subtle-text: #A5B4FC;
+  --color-accent-disabled:    rgba(99, 102, 241, 0.35);
+
+  /* Status — Success */
+  --color-success-bg:     rgba(21, 128, 61, 0.15);
+  --color-success-text:   #4ADE80;
+  --color-success-border: rgba(74, 222, 128, 0.25);
+  --color-success-muted:  #86EFAC;
+
+  /* Status — Danger */
+  --color-danger:        #F87171;
+  --color-danger-border: rgba(248, 113, 113, 0.35);
+
+  /* Shadows (stronger in dark for depth) */
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md:    0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg:    0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.6);
+}

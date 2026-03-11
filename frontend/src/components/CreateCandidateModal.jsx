@@ -1,90 +1,31 @@
 import { useState } from "react";
+import "../styles/CreateCandidateModal.css";
 
 const emptyExperience = () => ({ company: "", role: "", start: "", end: "", description: "" });
 const emptyEducation = () => ({ institution: "", degree: "", start: "", end: "" });
 const emptyCertification = () => ({ name: "", issuer: "", year: "" });
 
-const inputStyle = {
-  width: "100%",
-  padding: "7px 10px",
-  border: "1px solid #e5e7eb",
-  borderRadius: "6px",
-  fontSize: "14px",
-  boxSizing: "border-box",
-};
-
-const labelStyle = {
-  display: "block",
-  fontSize: "13px",
-  fontWeight: "600",
-  color: "#374151",
-  marginBottom: "4px",
-};
-
-const sectionTitleStyle = {
-  fontSize: "15px",
-  fontWeight: "700",
-  color: "#111827",
-  marginBottom: "12px",
-  marginTop: "24px",
-  paddingBottom: "6px",
-  borderBottom: "1px solid #f3f4f6",
-};
-
-const entryBoxStyle = {
-  border: "1px solid #e5e7eb",
-  borderRadius: "8px",
-  padding: "12px",
-  marginBottom: "12px",
-  position: "relative",
-  background: "#fafafa",
-};
-
-const addBtnStyle = {
-  padding: "5px 14px",
-  border: "1px solid #2563eb",
-  borderRadius: "6px",
-  background: "#fff",
-  color: "#2563eb",
-  fontSize: "13px",
-  cursor: "pointer",
-  fontWeight: "600",
-};
-
-const removeBtnStyle = {
-  position: "absolute",
-  top: "10px",
-  right: "10px",
-  padding: "2px 8px",
-  border: "1px solid #e5e7eb",
-  borderRadius: "4px",
-  background: "#fff",
-  color: "#9ca3af",
-  fontSize: "12px",
-  cursor: "pointer",
-};
-
 function Field({ label, value, onChange, required, placeholder, type = "text", rows }) {
   return (
-    <div style={{ marginBottom: "12px" }}>
-      <label style={labelStyle}>
-        {label}{required && <span style={{ color: "#ef4444" }}> *</span>}
+    <div className="form-field">
+      <label className="form-label">
+        {label}{required && <span className="form-required"> *</span>}
       </label>
       {rows ? (
         <textarea
+          className="form-textarea"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={rows}
-          style={{ ...inputStyle, resize: "vertical" }}
         />
       ) : (
         <input
+          className="form-input"
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          style={inputStyle}
         />
       )}
     </div>
@@ -188,61 +129,35 @@ export default function CreateCandidateModal({ onClose, onCreated, candidate }) 
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.4)",
-        zIndex: 1000,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "16px",
-      }}
+      className="modal-backdrop"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div
-        style={{
-          background: "#fff",
-          borderRadius: "12px",
-          width: "100%",
-          maxWidth: "600px",
-          maxHeight: "85vh",
-          overflowY: "auto",
-          padding: "28px",
-          fontFamily: "sans-serif",
-          position: "relative",
-        }}
-      >
+      <div className="modal-panel">
         {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-          <h2 style={{ margin: 0, fontSize: "20px" }}>{isEdit ? "Edit Candidate" : "New Candidate"}</h2>
-          <button
-            onClick={onClose}
-            style={{ background: "none", border: "none", fontSize: "20px", cursor: "pointer", color: "#9ca3af", lineHeight: 1 }}
-          >
-            ✕
-          </button>
+        <div className="modal-header">
+          <h2>{isEdit ? "Edit Candidate" : "New Candidate"}</h2>
+          <button onClick={onClose} className="btn btn-ghost modal-close">✕</button>
         </div>
 
         <form onSubmit={handleSubmit}>
           {/* Basic info */}
           <Field label="Name" value={form.name} onChange={setField("name")} required placeholder="Full name" />
           <Field label="Summary" value={form.summary} onChange={setField("summary")} required placeholder="Professional summary..." rows={3} />
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          <div className="form-grid-2">
             <Field label="Email" value={form.email} onChange={setField("email")} placeholder="email@example.com" type="email" />
             <Field label="Phone" value={form.phone} onChange={setField("phone")} placeholder="+1 555 000 0000" />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          <div className="form-grid-2">
             <Field label="Location" value={form.location} onChange={setField("location")} placeholder="City, Country" />
             <Field label="Photo URL" value={form.photo} onChange={setField("photo")} placeholder="https://..." />
           </div>
 
           {/* Experience */}
-          <div style={sectionTitleStyle}>Experience</div>
+          <div className="modal-section-title">Experience</div>
           {experience.map((exp, i) => (
-            <div key={i} style={entryBoxStyle}>
-              <button type="button" style={removeBtnStyle} onClick={() => removeEntry(experience, setExperience, i)}>✕</button>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+            <div key={i} className="entry-box">
+              <button type="button" className="entry-box__remove" onClick={() => removeEntry(experience, setExperience, i)}>✕</button>
+              <div className="form-grid-2">
                 <Field label="Company" value={exp.company} onChange={(v) => updateEntry(experience, setExperience, i, "company", v)} placeholder="Company name" />
                 <Field label="Role" value={exp.role} onChange={(v) => updateEntry(experience, setExperience, i, "role", v)} placeholder="Job title" />
                 <Field label="Start (YYYY-MM)" value={exp.start} onChange={(v) => updateEntry(experience, setExperience, i, "start", v)} placeholder="2022-01" />
@@ -251,16 +166,16 @@ export default function CreateCandidateModal({ onClose, onCreated, candidate }) 
               <Field label="Description" value={exp.description} onChange={(v) => updateEntry(experience, setExperience, i, "description", v)} placeholder="Role description..." rows={2} />
             </div>
           ))}
-          <button type="button" style={addBtnStyle} onClick={() => setExperience([...experience, emptyExperience()])}>
+          <button type="button" className="btn btn-accent-outline" onClick={() => setExperience([...experience, emptyExperience()])}>
             + Add experience
           </button>
 
           {/* Education */}
-          <div style={sectionTitleStyle}>Education</div>
+          <div className="modal-section-title">Education</div>
           {education.map((edu, i) => (
-            <div key={i} style={entryBoxStyle}>
-              <button type="button" style={removeBtnStyle} onClick={() => removeEntry(education, setEducation, i)}>✕</button>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+            <div key={i} className="entry-box">
+              <button type="button" className="entry-box__remove" onClick={() => removeEntry(education, setEducation, i)}>✕</button>
+              <div className="form-grid-2">
                 <Field label="Institution" value={edu.institution} onChange={(v) => updateEntry(education, setEducation, i, "institution", v)} placeholder="University name" />
                 <Field label="Degree" value={edu.degree} onChange={(v) => updateEntry(education, setEducation, i, "degree", v)} placeholder="B.Sc. Computer Science" />
                 <Field label="Start (YYYY-MM)" value={edu.start} onChange={(v) => updateEntry(education, setEducation, i, "start", v)} placeholder="2018-09" />
@@ -268,63 +183,38 @@ export default function CreateCandidateModal({ onClose, onCreated, candidate }) 
               </div>
             </div>
           ))}
-          <button type="button" style={addBtnStyle} onClick={() => setEducation([...education, emptyEducation()])}>
+          <button type="button" className="btn btn-accent-outline" onClick={() => setEducation([...education, emptyEducation()])}>
             + Add education
           </button>
 
           {/* Certifications */}
-          <div style={sectionTitleStyle}>Certifications</div>
+          <div className="modal-section-title">Certifications</div>
           {certifications.map((cert, i) => (
-            <div key={i} style={entryBoxStyle}>
-              <button type="button" style={removeBtnStyle} onClick={() => removeEntry(certifications, setCertifications, i)}>✕</button>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 80px", gap: "10px" }}>
+            <div key={i} className="entry-box">
+              <button type="button" className="entry-box__remove" onClick={() => removeEntry(certifications, setCertifications, i)}>✕</button>
+              <div className="form-grid-3">
                 <Field label="Name" value={cert.name} onChange={(v) => updateEntry(certifications, setCertifications, i, "name", v)} placeholder="AWS Solutions Architect" />
                 <Field label="Issuer" value={cert.issuer} onChange={(v) => updateEntry(certifications, setCertifications, i, "issuer", v)} placeholder="Amazon" />
                 <Field label="Year" value={cert.year} onChange={(v) => updateEntry(certifications, setCertifications, i, "year", v)} placeholder="2023" type="number" />
               </div>
             </div>
           ))}
-          <button type="button" style={addBtnStyle} onClick={() => setCertifications([...certifications, emptyCertification()])}>
+          <button type="button" className="btn btn-accent-outline" onClick={() => setCertifications([...certifications, emptyCertification()])}>
             + Add certification
           </button>
 
           {/* Error */}
-          {error && (
-            <p style={{ color: "#ef4444", fontSize: "13px", marginTop: "16px", marginBottom: 0 }}>
-              {error}
-            </p>
-          )}
+          {error && <p className="form-error">{error}</p>}
 
           {/* Actions */}
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "24px" }}>
-            <button
-              type="button"
-              onClick={onClose}
-              style={{
-                padding: "8px 20px",
-                border: "1px solid #e5e7eb",
-                borderRadius: "6px",
-                background: "#fff",
-                color: "#374151",
-                fontSize: "14px",
-                cursor: "pointer",
-              }}
-            >
+          <div className="modal-actions">
+            <button type="button" onClick={onClose} className="btn btn-secondary">
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading || !form.name.trim() || !form.summary.trim()}
-              style={{
-                padding: "8px 20px",
-                border: "none",
-                borderRadius: "6px",
-                background: loading || !form.name.trim() || !form.summary.trim() ? "#93c5fd" : "#2563eb",
-                color: "#fff",
-                fontSize: "14px",
-                fontWeight: "600",
-                cursor: loading || !form.name.trim() || !form.summary.trim() ? "default" : "pointer",
-              }}
+              className="btn btn-primary"
             >
               {loading ? (isEdit ? "Saving..." : "Creating...") : (isEdit ? "Save changes" : "Create candidate")}
             </button>

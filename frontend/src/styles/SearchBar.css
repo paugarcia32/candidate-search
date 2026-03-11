@@ -1,0 +1,15 @@
+.search-form {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.search-form__input {
+  flex: 1;
+  font-size: var(--font-size-lg);
+  padding: var(--space-4) var(--space-6);
+}
+
+.search-form__btn {
+  font-size: var(--font-size-lg);
+  padding: var(--space-4) var(--space-8);
+}
