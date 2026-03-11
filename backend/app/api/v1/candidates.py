@@ -5,6 +5,7 @@ from app.schemas.candidate import (
     CandidateUpdate,
     CandidatePatch,
     CandidateResponse,
+    CandidatePage,
     SearchRequest,
 )
 import app.services.candidates as svc
@@ -13,9 +14,9 @@ import app.services.search as search_svc
 router = APIRouter(prefix="/candidates", tags=["candidates"])
 
 
-@router.get("", response_model=list[CandidateResponse], status_code=200)
-def list_candidates():
-    return svc.list_candidates()
+@router.get("", response_model=CandidatePage, status_code=200)
+def list_candidates(limit: int = 20, offset: int = 0):
+    return svc.list_candidates(limit, offset)
 
 
 @router.post("", response_model=CandidateResponse, status_code=201)

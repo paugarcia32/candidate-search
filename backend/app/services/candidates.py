@@ -37,16 +37,20 @@ def _row_to_dict(row: tuple) -> dict:
     }
 
 
-def list_candidates() -> list[dict]:
+def list_candidates(limit: int = 20, offset: int = 0) -> dict:
     with get_conn() as conn:
         cur = conn.cursor()
+        cur.execute("SELECT COUNT(*) FROM candidates")
+        total = cur.fetchone()[0]
         cur.execute("""
             SELECT id, name, photo, location, email, phone, summary,
                    experience, education, certifications
             FROM candidates
             ORDER BY name
-        """)
-        return [_row_to_dict(row) for row in cur.fetchall()]
+            LIMIT %s OFFSET %s
+        """, (limit, offset))
+        items = [_row_to_dict(row) for row in cur.fetchall()]
+    return {"items": items, "total": total, "limit": limit, "offset": offset}
 
 
 def get_candidate(candidate_id: str) -> dict | None:

@@ -75,6 +75,13 @@ class CandidateResponse(BaseModel):
     score: Optional[float] = None
 
 
+class CandidatePage(BaseModel):
+    items: list[CandidateResponse]
+    total: int
+    limit: int
+    offset: int
+
+
 class SearchRequest(BaseModel):
     query: str
     top_k: int = 5
