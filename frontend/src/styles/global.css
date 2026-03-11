@@ -6,78 +6,80 @@
 /* ── Design tokens ──────────────────────────────────────── */
 @theme {
   /* Backgrounds */
-  --color-bg:             #FFFFFF;
-  --color-bg-subtle:      #F9FAFB;
+  --color-bg:             #FAFAF8;
+  --color-bg-subtle:      #F4F4F1;
   --color-surface:        #FFFFFF;
-  --color-surface-raised: #F3F4F6;
+  --color-surface-raised: #F0F0ED;
 
   /* Borders */
-  --color-border:         #E5E7EB;
-  --color-border-subtle:  #F3F4F6;
-  --color-border-strong:  #D1D5DB;
+  --color-border:         #E4E4DF;
+  --color-border-subtle:  #EEEDE9;
+  --color-border-strong:  #CFCFC8;
 
   /* Text / foreground */
-  --color-foreground:           #111827;
-  --color-foreground-secondary: #374151;
-  --color-foreground-subtle:    #6B7280;
-  --color-foreground-muted:     #9CA3AF;
+  --color-foreground:           #1A1A18;
+  --color-foreground-secondary: #3A3A36;
+  --color-foreground-subtle:    #6B6B65;
+  --color-foreground-muted:     #9C9C95;
   --color-foreground-inverse:   #FFFFFF;
 
-  /* Accent — Indigo */
-  --color-accent:             #6366F1;
-  --color-accent-hover:       #4F46E5;
-  --color-accent-subtle:      #EEF2FF;
-  --color-accent-foreground:  #4338CA;
-  --color-accent-disabled:    #A5B4FC;
+  /* Accent — refined slate-blue */
+  --color-accent:             #3D52A0;
+  --color-accent-hover:       #2E3F7F;
+  --color-accent-subtle:      #EEF1FA;
+  --color-accent-foreground:  #2E3F7F;
+  --color-accent-disabled:    #9BAAD5;
 
   /* Status — Success */
-  --color-success:            #F0FDF4;
-  --color-success-foreground: #15803D;
-  --color-success-border:     #BBF7D0;
-  --color-success-muted:      #16A34A;
+  --color-success:            #F2FBF5;
+  --color-success-foreground: #1A6B3A;
+  --color-success-border:     #C3E8D0;
+  --color-success-muted:      #2A8A50;
 
   /* Status — Danger */
-  --color-danger:        #EF4444;
+  --color-danger:        #DC2626;
   --color-danger-border: #FCA5A5;
 
   /* Typography */
-  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-sans:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'Bricolage Grotesque', system-ui, sans-serif;
 
   /* Shadows */
-  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.16);
+  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.12);
 }
 
 /* ── Dark theme overrides ───────────────────────────────── */
 [data-theme="dark"] {
-  --color-bg:             #1C1C1C;
-  --color-bg-subtle:      #242424;
-  --color-surface:        #2A2A2A;
-  --color-surface-raised: #333333;
+  --color-bg:             #161614;
+  --color-bg-subtle:      #1E1E1C;
+  --color-surface:        #242422;
+  --color-surface-raised: #2C2C2A;
 
-  --color-border:         #3A3A3A;
-  --color-border-subtle:  #2E2E2E;
-  --color-border-strong:  #4A4A4A;
+  --color-border:         #333330;
+  --color-border-subtle:  #2A2A28;
+  --color-border-strong:  #444440;
 
-  --color-foreground:           #E5E5E5;
-  --color-foreground-secondary: #CFCFCF;
-  --color-foreground-subtle:    #A1A1A1;
-  --color-foreground-muted:     #737373;
-  --color-foreground-inverse:   #111827;
+  --color-foreground:           #E8E8E4;
+  --color-foreground-secondary: #C8C8C2;
+  --color-foreground-subtle:    #8E8E87;
+  --color-foreground-muted:     #5E5E58;
+  --color-foreground-inverse:   #161614;
 
-  --color-accent-hover:      #818CF8;
-  --color-accent-subtle:     rgba(99, 102, 241, 0.15);
-  --color-accent-foreground: #A5B4FC;
-  --color-accent-disabled:   rgba(99, 102, 241, 0.35);
+  --color-accent:            #7B93D4;
+  --color-accent-hover:      #9AAEE0;
+  --color-accent-subtle:     rgba(123, 147, 212, 0.12);
+  --color-accent-foreground: #9AAEE0;
+  --color-accent-disabled:   rgba(123, 147, 212, 0.3);
 
-  --color-success:            rgba(21, 128, 61, 0.15);
+  --color-success:            rgba(26, 107, 58, 0.12);
   --color-success-foreground: #4ADE80;
-  --color-success-border:     rgba(74, 222, 128, 0.25);
+  --color-success-border:     rgba(74, 222, 128, 0.2);
   --color-success-muted:      #86EFAC;
 
   --color-danger:        #F87171;
-  --color-danger-border: rgba(248, 113, 113, 0.35);
+  --color-danger-border: rgba(248, 113, 113, 0.3);
 
-  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
 /* ── Base ───────────────────────────────────────────────── */
@@ -88,24 +90,60 @@ html {
 
 body {
   font-family: var(--font-family-sans);
-  letter-spacing: -0.15px;
+  letter-spacing: -0.1px;
   color: var(--color-foreground);
   background-color: var(--color-bg);
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.15px;
+  font-family: var(--font-family-display);
+  letter-spacing: -0.3px;
 }
 
 /* ── Component classes ──────────────────────────────────── */
 @layer components {
 
+  /* -- Header -------------------------------------------- */
+  .app-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    height: 52px;
+    background-color: color-mix(in srgb, var(--color-bg) 90%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .app-header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-header-brand {
+    font-family: var(--font-family-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-decoration: none;
+    letter-spacing: -0.4px;
+    transition: color 0.15s ease;
+  }
+
+  .app-header-brand:hover {
+    color: var(--color-accent);
+  }
+
   /* -- Buttons ------------------------------------------- */
   .btn {
-    @apply inline-flex items-center gap-1.5 font-semibold rounded-md border border-transparent
+    @apply inline-flex items-center gap-1.5 font-medium rounded-md border border-transparent
            cursor-pointer transition-all whitespace-nowrap;
-    letter-spacing: -0.15px;
+    font-family: var(--font-family-sans);
+    letter-spacing: -0.1px;
   }
 
   .btn:disabled {
@@ -136,7 +174,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .btn-danger-filled {
-    @apply px-3.5 py-1.5 text-sm font-semibold bg-danger text-white border-transparent;
+    @apply px-3.5 py-1.5 text-sm font-medium bg-danger text-white border-transparent;
   }
 
   .btn-accent-outline {
@@ -148,14 +186,41 @@ h1, h2, h3, h4, h5, h6 {
     @apply px-4 py-1.5 text-sm;
   }
 
+  /* -- Search -------------------------------------------- */
+  .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--color-foreground-muted);
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+
+  .search-input {
+    @apply w-full bg-surface text-foreground border border-border rounded-lg
+           outline-none transition-all placeholder:text-foreground-muted;
+    @apply focus:border-accent focus:ring-2 focus:ring-accent/15;
+    font-family: var(--font-family-sans);
+    font-size: 15px;
+    letter-spacing: -0.1px;
+    padding: 11px 14px 11px 42px;
+    box-sizing: border-box;
+  }
+
   /* -- Form ---------------------------------------------- */
   .form-field {
     @apply mb-3;
   }
 
   .form-label {
-    @apply block text-[13px] font-semibold text-foreground-secondary mb-1;
-    letter-spacing: -0.15px;
+    @apply block text-[13px] font-medium text-foreground-secondary mb-1;
+    font-family: var(--font-family-sans);
+    letter-spacing: -0.1px;
   }
 
   .form-required {
@@ -166,10 +231,10 @@ h1, h2, h3, h4, h5, h6 {
   .form-textarea {
     @apply w-full px-2.5 py-2.5 bg-surface text-foreground border border-border rounded-md
            outline-none transition-all placeholder:text-foreground-muted;
-    @apply focus:border-accent focus:ring-2 focus:ring-accent/20;
+    @apply focus:border-accent focus:ring-2 focus:ring-accent/15;
     font-family: var(--font-family-sans);
     font-size: 14px;
-    letter-spacing: -0.15px;
+    letter-spacing: -0.1px;
     box-sizing: border-box;
   }
 
@@ -177,16 +242,50 @@ h1, h2, h3, h4, h5, h6 {
     @apply resize-y;
   }
 
+  /* -- Candidate card ------------------------------------ */
+  .candidate-card {
+    @apply border border-border rounded-xl p-4 flex gap-4 items-start
+           cursor-pointer transition-all duration-200;
+    background-color: var(--color-surface);
+  }
+
+  .candidate-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 0 0 1px var(--color-border-strong);
+    transform: translateY(-1px);
+  }
+
+  [data-theme="dark"] .candidate-card:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--color-border-strong);
+  }
+
+  .candidate-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 6px;
+  }
+
+  .candidate-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--color-foreground-subtle);
+  }
+
   /* -- Badges -------------------------------------------- */
   .badge-accent {
-    @apply inline-block px-2.5 py-0.5 rounded-full text-[13px] font-semibold whitespace-nowrap
+    @apply inline-block px-2.5 py-0.5 rounded-full text-[12px] font-medium whitespace-nowrap
            bg-accent-subtle text-accent-foreground;
+    letter-spacing: 0;
   }
 
   /* -- Section label ------------------------------------- */
   .section-label {
-    @apply text-[13px] font-semibold uppercase text-foreground-muted;
-    letter-spacing: 0.05em;
+    @apply text-[11px] font-semibold uppercase text-foreground-muted;
+    font-family: var(--font-family-sans);
+    letter-spacing: 0.08em;
     margin: 0 0 14px;
   }
 
@@ -202,6 +301,6 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 760px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 16px;
+    padding: 0 20px;
   }
 }

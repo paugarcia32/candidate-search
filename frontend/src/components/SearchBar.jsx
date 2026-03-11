@@ -1,5 +1,14 @@
 import { useState } from "react";
 
+function IconSearch() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+  );
+}
+
 export default function SearchBar({ onResults, onLoading }) {
   const [query, setQuery] = useState("");
 
@@ -26,14 +35,19 @@ export default function SearchBar({ onResults, onLoading }) {
 
   return (
     <form className="flex gap-2" onSubmit={handleSearch}>
-      <input
-        type="text"
-        className="form-input flex-1 text-base px-3.5 py-2.5"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="e.g. backend developer with Python experience"
-      />
-      <button type="submit" className="btn btn-primary text-base px-5 py-2.5">
+      <div className="search-wrapper flex-1">
+        <span className="search-icon">
+          <IconSearch />
+        </span>
+        <input
+          type="text"
+          className="search-input"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="e.g. backend developer with Python experience"
+        />
+      </div>
+      <button type="submit" className="btn btn-primary" style={{ padding: "0 20px" }}>
         Search
       </button>
     </form>
