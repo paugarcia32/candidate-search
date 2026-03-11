@@ -242,6 +242,110 @@ h1, h2, h3, h4, h5, h6 {
     @apply resize-y;
   }
 
+  /* -- Search filters ------------------------------------ */
+  .search-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    background-color: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-foreground-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 2px;
+    white-space: nowrap;
+  }
+
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-foreground-subtle);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: var(--font-family-sans);
+  }
+
+  .filter-chip:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-foreground);
+  }
+
+  .filter-chip.active {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .filter-select {
+    font-size: 13px;
+    font-family: var(--font-family-sans);
+    font-weight: 500;
+    color: var(--color-foreground-subtle);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 3px 10px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%239C9C95' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+  }
+
+  .filter-select:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-foreground);
+  }
+
+  .filter-select:focus {
+    border-color: var(--color-accent);
+  }
+
+  .filter-clear-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-accent-foreground);
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: opacity 0.15s;
+  }
+
+  .filter-clear-link:hover {
+    opacity: 0.75;
+  }
+
   /* -- Candidate card ------------------------------------ */
   .candidate-card {
     @apply border border-border rounded-xl p-4 flex gap-4 items-start

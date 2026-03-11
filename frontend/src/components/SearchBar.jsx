@@ -9,32 +9,22 @@ function IconSearch() {
   );
 }
 
-export default function SearchBar({ onResults, onLoading }) {
+export default function SearchBar({ onSearch, onClear }) {
   const [query, setQuery] = useState("");
 
-  async function handleSearch(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     if (!query.trim()) return;
+    onSearch(query.trim());
+  }
 
-    onLoading(true);
-    try {
-      const res = await fetch("/api/v1/candidates/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, top_k: 5 }),
-      });
-      const data = await res.json();
-      onResults(data);
-    } catch (err) {
-      console.error(err);
-      onResults([]);
-    } finally {
-      onLoading(false);
-    }
+  function handleClear() {
+    setQuery("");
+    onClear?.();
   }
 
   return (
-    <form className="flex gap-2" onSubmit={handleSearch}>
+    <form className="flex gap-2" onSubmit={handleSubmit}>
       <div className="search-wrapper flex-1">
         <span className="search-icon">
           <IconSearch />
@@ -44,8 +34,37 @@ export default function SearchBar({ onResults, onLoading }) {
           className="search-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === "Escape" && handleClear()}
           placeholder="e.g. backend developer with Python experience"
+          style={{ paddingRight: query ? "40px" : "14px" }}
         />
+        {query && (
+          <button
+            type="button"
+            onClick={handleClear}
+            aria-label="Clear search"
+            style={{
+              position: "absolute",
+              right: "10px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "var(--color-foreground-muted)",
+              display: "flex",
+              alignItems: "center",
+              padding: "4px",
+              borderRadius: "4px",
+              transition: "color 0.15s",
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-foreground)"}
+            onMouseLeave={(e) => e.currentTarget.style.color = "var(--color-foreground-muted)"}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        )}
       </div>
       <button type="submit" className="btn btn-primary" style={{ padding: "0 20px" }}>
         Search

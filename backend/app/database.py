@@ -1,8 +1,8 @@
-import os
 import contextlib
-import psycopg2
-from psycopg2.pool import ThreadedConnectionPool
+import os
+
 from dotenv import load_dotenv
+from psycopg2.pool import ThreadedConnectionPool
 
 load_dotenv()
 

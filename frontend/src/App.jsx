@@ -107,9 +107,15 @@ function CandidateCard({ candidate }) {
   );
 }
 
+const MATCH_PRESETS = [0, 20, 40, 60, 80];
+
 function SearchPage() {
+  const [currentQuery, setCurrentQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [searchLoading, setSearchLoading] = useState(false);
+  const [minMatch, setMinMatch] = useState(0);
+  const [locationFilter, setLocationFilter] = useState("");
+  const [allLocations, setAllLocations] = useState([]);
 
   const [browse, setBrowse] = useState({ items: [], total: 0 });
   const [browseLoading, setBrowseLoading] = useState(true);
@@ -126,23 +132,66 @@ function SearchPage() {
       .finally(() => setBrowseLoading(false));
   }, [page, refreshKey]);
 
+  async function fetchSearchResults(query, matchPct, loc, isNewSearch = false) {
+    setSearchLoading(true);
+    try {
+      const res = await fetch("/api/v1/candidates/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query,
+          top_k: 5,
+          min_score: matchPct > 0 ? matchPct / 100 : null,
+          location: loc || null,
+        }),
+      });
+      const data = await res.json();
+      setSearchResults(data);
+      if (isNewSearch) {
+        setAllLocations([...new Set(data.map((c) => c.location).filter(Boolean))].sort());
+      }
+    } catch (err) {
+      console.error(err);
+      setSearchResults([]);
+    } finally {
+      setSearchLoading(false);
+    }
+  }
+
   function handleCreated() {
     setShowModal(false);
     setPage(1);
     setRefreshKey((k) => k + 1);
   }
 
-  function handleResults(data) {
-    setSearchResults(data);
+  function handleSearch(query) {
+    setCurrentQuery(query);
+    setMinMatch(0);
+    setLocationFilter("");
+    setSearchResults(null);
+    fetchSearchResults(query, 0, "", true);
   }
 
-  function handleSearchLoading(val) {
-    setSearchLoading(val);
-    if (val) setSearchResults(null);
+  function handleClear() {
+    setCurrentQuery("");
+    setSearchResults(null);
+    setMinMatch(0);
+    setLocationFilter("");
+    setAllLocations([]);
+  }
+
+  function handleMinMatchChange(pct) {
+    setMinMatch(pct);
+    fetchSearchResults(currentQuery, pct, locationFilter);
+  }
+
+  function handleLocationChange(loc) {
+    setLocationFilter(loc);
+    fetchSearchResults(currentQuery, minMatch, loc);
   }
 
   const totalPages = Math.ceil(browse.total / PAGE_SIZE);
-  const isSearchMode = searchResults !== null;
+  const isSearchMode = searchResults !== null || (searchLoading && currentQuery !== "");
 
   return (
     <div className="page-container mt-8 mb-10">
@@ -161,7 +210,7 @@ function SearchPage() {
             + New Candidate
           </button>
         </div>
-        <SearchBar onResults={handleResults} onLoading={handleSearchLoading} />
+        <SearchBar onSearch={handleSearch} onClear={handleClear} />
         <p className="mt-2.5 text-[13px] text-foreground-muted">
           Describe the profile you are looking for in natural language.
         </p>
@@ -172,25 +221,61 @@ function SearchPage() {
         <p className="mt-6 text-sm text-foreground-subtle">Searching...</p>
       )}
 
-      {!searchLoading && isSearchMode && searchResults.length === 0 && (
-        <p className="mt-6 text-sm text-foreground-subtle">No results found.</p>
-      )}
-
-      {!searchLoading && isSearchMode && searchResults.length > 0 && (
+      {!searchLoading && searchResults !== null && (
         <>
-          <p className="mb-3 text-[12px] text-foreground-muted uppercase tracking-wide font-medium">
-            {searchResults.length} result{searchResults.length !== 1 ? "s" : ""}
-          </p>
-          <ul className="list-none p-0 flex flex-col gap-2">
-            {searchResults.map((candidate) => (
-              <CandidateCard key={candidate.id} candidate={candidate} />
-            ))}
-          </ul>
+          {/* Filters — always visible while in search mode */}
+          {allLocations.length > 0 && (
+            <div className="search-filters">
+              <div className="filter-group">
+                <span className="filter-label">Match</span>
+                {MATCH_PRESETS.map((pct) => (
+                  <button
+                    key={pct}
+                    type="button"
+                    className={`filter-chip${minMatch === pct ? " active" : ""}`}
+                    onClick={() => handleMinMatchChange(pct)}
+                  >
+                    {pct === 0 ? "Any" : `${pct}%+`}
+                  </button>
+                ))}
+              </div>
+              {allLocations.length > 1 && (
+                <div className="filter-group">
+                  <span className="filter-label">Location</span>
+                  <select
+                    value={locationFilter}
+                    onChange={(e) => handleLocationChange(e.target.value)}
+                    className="filter-select"
+                  >
+                    <option value="">All</option>
+                    {allLocations.map((loc) => (
+                      <option key={loc} value={loc}>{loc}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
+          )}
+
+          {searchResults.length === 0 ? (
+            <p className="mt-2 text-sm text-foreground-subtle">No results match the current filters.</p>
+          ) : (
+            <>
+              <p className="mb-3 text-[12px] text-foreground-muted uppercase tracking-wide font-medium">
+                {searchResults.length} result{searchResults.length !== 1 ? "s" : ""}
+              </p>
+              <ul className="list-none p-0 flex flex-col gap-2">
+                {searchResults.map((candidate) => (
+                  <CandidateCard key={candidate.id} candidate={candidate} />
+                ))}
+              </ul>
+            </>
+          )}
         </>
       )}
 
       {/* Browse mode */}
-      {!isSearchMode && !searchLoading && (
+      {!currentQuery && !searchLoading && (
         <>
           {browseLoading ? (
             <p className="mt-6 text-sm text-foreground-subtle">Loading candidates...</p>

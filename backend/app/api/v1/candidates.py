@@ -26,7 +26,7 @@ def create_candidate(body: CandidateCreate):
 
 @router.post("/search", response_model=list[CandidateResponse], status_code=200)
 def search(body: SearchRequest):
-    return search_svc.search_candidates(body.query, body.top_k)
+    return search_svc.search_candidates(body.query, body.top_k, body.min_score, body.location)
 
 
 @router.get("/{candidate_id}", response_model=CandidateResponse, status_code=200)

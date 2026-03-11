@@ -85,3 +85,5 @@ class CandidatePage(BaseModel):
 class SearchRequest(BaseModel):
     query: str
     top_k: int = 5
+    min_score: Optional[float] = None
+    location: Optional[str] = None
