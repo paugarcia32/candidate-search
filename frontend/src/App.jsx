@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import CandidateProfile from "./components/CandidateProfile";
+import CreateCandidateModal from "./components/CreateCandidateModal";
 
 const PAGE_SIZE = 9;
 
@@ -78,6 +79,8 @@ function SearchPage() {
   const [browse, setBrowse] = useState({ items: [], total: 0 });
   const [browseLoading, setBrowseLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setBrowseLoading(true);
@@ -86,7 +89,13 @@ function SearchPage() {
       .then((r) => r.json())
       .then((data) => setBrowse({ items: data.items ?? [], total: data.total ?? 0, limit: data.limit ?? PAGE_SIZE, offset: data.offset ?? 0 }))
       .finally(() => setBrowseLoading(false));
-  }, [page]);
+  }, [page, refreshKey]);
+
+  function handleCreated() {
+    setShowModal(false);
+    setPage(1);
+    setRefreshKey((k) => k + 1);
+  }
 
   function handleResults(data) {
     setSearchResults(data);
@@ -102,10 +111,32 @@ function SearchPage() {
 
   return (
     <div style={{ maxWidth: "760px", margin: "60px auto", padding: "0 16px", fontFamily: "sans-serif" }}>
-      <h1 style={{ fontSize: "28px", marginBottom: "8px" }}>Candidate Search</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+        <h1 style={{ fontSize: "28px", margin: 0 }}>Candidate Search</h1>
+        <button
+          type="button"
+          onClick={() => setShowModal(true)}
+          style={{
+            padding: "8px 18px",
+            background: "#2563eb",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            fontSize: "14px",
+            fontWeight: "600",
+            cursor: "pointer",
+          }}
+        >
+          + New Candidate
+        </button>
+      </div>
       <p style={{ color: "#555", marginBottom: "24px" }}>
         Describe the profile you are looking for in natural language.
       </p>
+
+      {showModal && (
+        <CreateCandidateModal onClose={() => setShowModal(false)} onCreated={handleCreated} />
+      )}
 
       <SearchBar onResults={handleResults} onLoading={handleSearchLoading} />
 
