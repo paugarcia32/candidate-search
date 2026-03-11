@@ -91,18 +91,26 @@ function Field({ label, value, onChange, required, placeholder, type = "text", r
   );
 }
 
-export default function CreateCandidateModal({ onClose, onCreated }) {
+export default function CreateCandidateModal({ onClose, onCreated, candidate }) {
+  const isEdit = !!candidate;
+
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    location: "",
-    photo: "",
-    summary: "",
+    name: candidate?.name ?? "",
+    email: candidate?.email ?? "",
+    phone: candidate?.phone ?? "",
+    location: candidate?.location ?? "",
+    photo: candidate?.photo ?? "",
+    summary: candidate?.summary ?? "",
   });
-  const [experience, setExperience] = useState([]);
-  const [education, setEducation] = useState([]);
-  const [certifications, setCertifications] = useState([]);
+  const [experience, setExperience] = useState(
+    candidate?.experience?.map((e) => ({ ...e, end: e.end ?? "" })) ?? []
+  );
+  const [education, setEducation] = useState(
+    candidate?.education?.map((e) => ({ ...e, end: e.end ?? "" })) ?? []
+  );
+  const [certifications, setCertifications] = useState(
+    candidate?.certifications?.map((c) => ({ ...c, year: c.year != null ? String(c.year) : "" })) ?? []
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -158,8 +166,10 @@ export default function CreateCandidateModal({ onClose, onCreated }) {
     };
 
     try {
-      const res = await fetch("/api/v1/candidates", {
-        method: "POST",
+      const url = isEdit ? `/api/v1/candidates/${candidate.id}` : "/api/v1/candidates";
+      const method = isEdit ? "PUT" : "POST";
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -205,7 +215,7 @@ export default function CreateCandidateModal({ onClose, onCreated }) {
       >
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-          <h2 style={{ margin: 0, fontSize: "20px" }}>New Candidate</h2>
+          <h2 style={{ margin: 0, fontSize: "20px" }}>{isEdit ? "Edit Candidate" : "New Candidate"}</h2>
           <button
             onClick={onClose}
             style={{ background: "none", border: "none", fontSize: "20px", cursor: "pointer", color: "#9ca3af", lineHeight: 1 }}
@@ -316,7 +326,7 @@ export default function CreateCandidateModal({ onClose, onCreated }) {
                 cursor: loading || !form.name.trim() || !form.summary.trim() ? "default" : "pointer",
               }}
             >
-              {loading ? "Creating..." : "Create candidate"}
+              {loading ? (isEdit ? "Saving..." : "Creating...") : (isEdit ? "Save changes" : "Create candidate")}
             </button>
           </div>
         </form>

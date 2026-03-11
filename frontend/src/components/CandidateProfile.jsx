@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import CreateCandidateModal from "./CreateCandidateModal";
 
 function formatPeriod(start, end) {
   if (!start) return "";
@@ -21,6 +22,9 @@ export default function CandidateProfile() {
   const [candidate, setCandidate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetch(`/api/v1/candidates/${id}`)
@@ -32,6 +36,22 @@ export default function CandidateProfile() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  async function handleDelete() {
+    setDeleting(true);
+    await fetch(`/api/v1/candidates/${id}`, { method: "DELETE" });
+    navigate("/");
+  }
+
+  function handleEdited() {
+    setShowEdit(false);
+    // Refetch to show updated data
+    setLoading(true);
+    fetch(`/api/v1/candidates/${id}`)
+      .then((res) => res.json())
+      .then((data) => setCandidate(data))
+      .finally(() => setLoading(false));
+  }
+
   const containerStyle = { maxWidth: "760px", margin: "40px auto", padding: "0 16px", fontFamily: "sans-serif" };
 
   if (loading) return <div style={containerStyle}><p style={{ color: "#555" }}>Loading...</p></div>;
@@ -40,23 +60,104 @@ export default function CandidateProfile() {
 
   return (
     <div style={containerStyle}>
-      {/* Back button */}
-      <button
-        onClick={() => navigate(-1)}
-        style={{
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          color: "#6b7280",
-          fontSize: "14px",
-          padding: "0 0 20px",
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-        }}
-      >
-        ← Back
-      </button>
+      {showEdit && (
+        <CreateCandidateModal
+          candidate={candidate}
+          onClose={() => setShowEdit(false)}
+          onCreated={handleEdited}
+        />
+      )}
+
+      {/* Back button + actions */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+        <button
+          onClick={() => navigate(-1)}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "#6b7280",
+            fontSize: "14px",
+            padding: 0,
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+          }}
+        >
+          ← Back
+        </button>
+
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {confirmDelete ? (
+            <>
+              <span style={{ fontSize: "13px", color: "#374151" }}>Are you sure?</span>
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                style={{
+                  padding: "6px 14px",
+                  border: "none",
+                  borderRadius: "6px",
+                  background: "#ef4444",
+                  color: "#fff",
+                  fontSize: "13px",
+                  fontWeight: "600",
+                  cursor: deleting ? "default" : "pointer",
+                }}
+              >
+                {deleting ? "Deleting..." : "Yes, delete"}
+              </button>
+              <button
+                onClick={() => setConfirmDelete(false)}
+                style={{
+                  padding: "6px 14px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  background: "#fff",
+                  color: "#374151",
+                  fontSize: "13px",
+                  cursor: "pointer",
+                }}
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => setShowEdit(true)}
+                style={{
+                  padding: "6px 16px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  background: "#fff",
+                  color: "#374151",
+                  fontSize: "13px",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                }}
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => setConfirmDelete(true)}
+                style={{
+                  padding: "6px 16px",
+                  border: "1px solid #fca5a5",
+                  borderRadius: "6px",
+                  background: "#fff",
+                  color: "#ef4444",
+                  fontSize: "13px",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                }}
+              >
+                Delete
+              </button>
+            </>
+          )}
+        </div>
+      </div>
 
       {/* Header */}
       <div style={{ display: "flex", gap: "20px", alignItems: "flex-start", marginBottom: "24px" }}>
