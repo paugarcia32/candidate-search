@@ -1,14 +1,83 @@
-/* ============================================================
-   GLOBAL.CSS — Reset, base typography, shared component classes
-   ============================================================ */
+@import "tailwindcss";
 
-@import './tokens.css';
+/* ── Dark mode variant: triggered by [data-theme="dark"] ── */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* ── Reset ──────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ── Design tokens ──────────────────────────────────────── */
+@theme {
+  /* Backgrounds */
+  --color-bg:             #FFFFFF;
+  --color-bg-subtle:      #F9FAFB;
+  --color-surface:        #FFFFFF;
+  --color-surface-raised: #F3F4F6;
+
+  /* Borders */
+  --color-border:         #E5E7EB;
+  --color-border-subtle:  #F3F4F6;
+  --color-border-strong:  #D1D5DB;
+
+  /* Text / foreground */
+  --color-foreground:           #111827;
+  --color-foreground-secondary: #374151;
+  --color-foreground-subtle:    #6B7280;
+  --color-foreground-muted:     #9CA3AF;
+  --color-foreground-inverse:   #FFFFFF;
+
+  /* Accent — Indigo */
+  --color-accent:             #6366F1;
+  --color-accent-hover:       #4F46E5;
+  --color-accent-subtle:      #EEF2FF;
+  --color-accent-foreground:  #4338CA;
+  --color-accent-disabled:    #A5B4FC;
+
+  /* Status — Success */
+  --color-success:            #F0FDF4;
+  --color-success-foreground: #15803D;
+  --color-success-border:     #BBF7D0;
+  --color-success-muted:      #16A34A;
+
+  /* Status — Danger */
+  --color-danger:        #EF4444;
+  --color-danger-border: #FCA5A5;
+
+  /* Typography */
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Shadows */
+  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.16);
+}
+
+/* ── Dark theme overrides ───────────────────────────────── */
+[data-theme="dark"] {
+  --color-bg:             #1C1C1C;
+  --color-bg-subtle:      #242424;
+  --color-surface:        #2A2A2A;
+  --color-surface-raised: #333333;
+
+  --color-border:         #3A3A3A;
+  --color-border-subtle:  #2E2E2E;
+  --color-border-strong:  #4A4A4A;
+
+  --color-foreground:           #E5E5E5;
+  --color-foreground-secondary: #CFCFCF;
+  --color-foreground-subtle:    #A1A1A1;
+  --color-foreground-muted:     #737373;
+  --color-foreground-inverse:   #111827;
+
+  --color-accent-hover:      #818CF8;
+  --color-accent-subtle:     rgba(99, 102, 241, 0.15);
+  --color-accent-foreground: #A5B4FC;
+  --color-accent-disabled:   rgba(99, 102, 241, 0.35);
+
+  --color-success:            rgba(21, 128, 61, 0.15);
+  --color-success-foreground: #4ADE80;
+  --color-success-border:     rgba(74, 222, 128, 0.25);
+  --color-success-muted:      #86EFAC;
+
+  --color-danger:        #F87171;
+  --color-danger-border: rgba(248, 113, 113, 0.35);
+
+  --shadow-modal: 0 8px 40px rgba(0, 0, 0, 0.6);
 }
 
 /* ── Base ───────────────────────────────────────────────── */
@@ -18,246 +87,121 @@ html {
 }
 
 body {
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing-tight);
-  line-height: var(--line-height-base);
-  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  letter-spacing: -0.15px;
+  color: var(--color-foreground);
   background-color: var(--color-bg);
-  transition: background-color var(--transition-slow), color var(--transition-slow);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--color-text-primary);
+  letter-spacing: -0.15px;
 }
 
-a {
-  color: var(--color-accent);
-  text-decoration: none;
-}
+/* ── Component classes ──────────────────────────────────── */
+@layer components {
 
-a:hover {
-  color: var(--color-accent-hover);
-}
+  /* -- Buttons ------------------------------------------- */
+  .btn {
+    @apply inline-flex items-center gap-1.5 font-semibold rounded-md border border-transparent
+           cursor-pointer transition-all whitespace-nowrap;
+    letter-spacing: -0.15px;
+  }
 
-/* ── Layout ─────────────────────────────────────────────── */
-.page-container {
-  max-width: var(--content-max-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding: var(--content-padding);
-}
+  .btn:disabled {
+    @apply cursor-default opacity-60;
+  }
 
-/* ── Buttons ────────────────────────────────────────────── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-tight);
-  line-height: 1;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: background-color var(--transition-base), color var(--transition-base),
-              border-color var(--transition-base), box-shadow var(--transition-base);
-  white-space: nowrap;
-}
+  .btn-primary {
+    @apply px-5 py-2 bg-accent text-white hover:bg-accent-hover;
+  }
 
-.btn:disabled {
-  cursor: default;
-  opacity: 0.6;
-}
+  .btn-primary:disabled {
+    @apply bg-accent-disabled opacity-100;
+  }
 
-/* Primary — accent filled */
-.btn-primary {
-  padding: var(--space-3) var(--space-8);
-  background-color: var(--color-accent);
-  color: #fff;
-  border-color: transparent;
-}
+  .btn-secondary {
+    @apply px-4 py-2 bg-surface text-foreground-secondary border-border
+           hover:bg-surface-raised hover:border-border-strong;
+  }
 
-.btn-primary:hover:not(:disabled) {
-  background-color: var(--color-accent-hover);
-}
+  .btn-ghost {
+    @apply p-0 bg-transparent border-transparent text-foreground-subtle
+           font-normal hover:text-foreground;
+  }
 
-.btn-primary:disabled {
-  background-color: var(--color-accent-disabled);
-}
+  .btn-danger {
+    @apply px-4 py-1.5 text-sm bg-surface text-danger border-danger-border
+           hover:bg-danger hover:text-white hover:border-danger;
+  }
 
-/* Secondary — outlined */
-.btn-secondary {
-  padding: var(--space-3) var(--space-7);
-  background-color: var(--color-surface);
-  color: var(--color-text-secondary);
-  border-color: var(--color-border);
-}
+  .btn-danger-filled {
+    @apply px-3.5 py-1.5 text-sm font-semibold bg-danger text-white border-transparent;
+  }
 
-.btn-secondary:hover:not(:disabled) {
-  background-color: var(--color-surface-raised);
-  border-color: var(--color-border-strong);
-}
+  .btn-accent-outline {
+    @apply px-3.5 py-1 text-sm bg-surface text-accent border-accent
+           hover:bg-accent-subtle;
+  }
 
-/* Ghost — no bg, no border */
-.btn-ghost {
-  padding: 0;
-  background: none;
-  border-color: transparent;
-  color: var(--color-text-subtle);
-  font-weight: var(--font-weight-normal);
-}
+  .btn-sm {
+    @apply px-4 py-1.5 text-sm;
+  }
 
-.btn-ghost:hover:not(:disabled) {
-  color: var(--color-text-primary);
-}
+  /* -- Form ---------------------------------------------- */
+  .form-field {
+    @apply mb-3;
+  }
 
-/* Danger outlined */
-.btn-danger {
-  padding: var(--space-2) var(--space-7);
-  background-color: var(--color-surface);
-  color: var(--color-danger);
-  border-color: var(--color-danger-border);
-  font-size: var(--font-size-sm);
-}
+  .form-label {
+    @apply block text-[13px] font-semibold text-foreground-secondary mb-1;
+    letter-spacing: -0.15px;
+  }
 
-.btn-danger:hover:not(:disabled) {
-  background-color: var(--color-danger);
-  color: #fff;
-  border-color: var(--color-danger);
-}
+  .form-required {
+    @apply text-danger;
+  }
 
-/* Danger filled */
-.btn-danger-filled {
-  padding: var(--space-2) var(--space-6);
-  background-color: var(--color-danger);
-  color: #fff;
-  border-color: transparent;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-}
+  .form-input,
+  .form-textarea {
+    @apply w-full px-2.5 py-2.5 bg-surface text-foreground border border-border rounded-md
+           outline-none transition-all placeholder:text-foreground-muted;
+    @apply focus:border-accent focus:ring-2 focus:ring-accent/20;
+    font-family: var(--font-family-sans);
+    font-size: 14px;
+    letter-spacing: -0.15px;
+    box-sizing: border-box;
+  }
 
-/* Accent outlined (add entry buttons) */
-.btn-accent-outline {
-  padding: var(--space-1) var(--space-6);
-  background-color: var(--color-surface);
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-  font-size: var(--font-size-sm);
-}
+  .form-textarea {
+    @apply resize-y;
+  }
 
-.btn-accent-outline:hover:not(:disabled) {
-  background-color: var(--color-accent-subtle-bg);
-}
+  /* -- Badges -------------------------------------------- */
+  .badge-accent {
+    @apply inline-block px-2.5 py-0.5 rounded-full text-[13px] font-semibold whitespace-nowrap
+           bg-accent-subtle text-accent-foreground;
+  }
 
-/* Size modifier */
-.btn-sm {
-  padding: var(--space-2) var(--space-7);
-  font-size: var(--font-size-base);
-}
+  /* -- Section label ------------------------------------- */
+  .section-label {
+    @apply text-[13px] font-semibold uppercase text-foreground-muted;
+    letter-spacing: 0.05em;
+    margin: 0 0 14px;
+  }
 
-/* ── Form ───────────────────────────────────────────────── */
-.form-field {
-  margin-bottom: var(--space-5);
-}
+  /* -- Theme toggle -------------------------------------- */
+  .theme-toggle {
+    @apply w-8 h-8 inline-flex items-center justify-center rounded-md
+           text-foreground-subtle cursor-pointer bg-transparent border-none
+           transition-all shrink-0 hover:bg-surface-raised hover:text-foreground;
+  }
 
-.form-label {
-  display: block;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-1);
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.form-required {
-  color: var(--color-danger);
-}
-
-.form-input,
-.form-textarea {
-  width: 100%;
-  padding: var(--space-4) var(--space-4);
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--color-text-primary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  box-sizing: border-box;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base),
-              background-color var(--transition-slow);
-  outline: none;
-}
-
-.form-input::placeholder,
-.form-textarea::placeholder {
-  color: var(--color-text-muted);
-}
-
-.form-input:focus,
-.form-textarea:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-subtle-bg);
-}
-
-.form-textarea {
-  resize: vertical;
-}
-
-/* ── Badge ──────────────────────────────────────────────── */
-.badge-accent {
-  display: inline-block;
-  padding: 2px var(--space-4);
-  background-color: var(--color-accent-subtle-bg);
-  color: var(--color-accent-subtle-text);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  white-space: nowrap;
-}
-
-/* ── Section label ──────────────────────────────────────── */
-.section-label {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
-  color: var(--color-text-muted);
-  margin: 0 0 var(--space-6);
-}
-
-/* ── Text utilities ─────────────────────────────────────── */
-.text-subtle {
-  color: var(--color-text-subtle);
-}
-
-.text-muted {
-  color: var(--color-text-muted);
-}
-
-/* ── Theme toggle ───────────────────────────────────────── */
-.theme-toggle {
-  width: 34px;
-  height: 34px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  color: var(--color-text-subtle);
-  flex-shrink: 0;
-  cursor: pointer;
-  background: none;
-  border: none;
-  transition: background-color var(--transition-base), color var(--transition-base);
-}
-
-.theme-toggle:hover {
-  background-color: var(--color-surface-raised);
-  color: var(--color-text-primary);
+  /* -- Layout -------------------------------------------- */
+  .page-container {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 16px;
+  }
 }

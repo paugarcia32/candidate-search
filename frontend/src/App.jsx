@@ -4,41 +4,42 @@ import SearchBar from "./components/SearchBar";
 import CandidateProfile from "./components/CandidateProfile";
 import CreateCandidateModal from "./components/CreateCandidateModal";
 import ThemeToggle from "./components/ThemeToggle";
-import "./styles/App.css";
 
 const PAGE_SIZE = 9;
 
 function CandidateCard({ candidate }) {
   return (
-    <li className="candidate-card-item">
+    <li className="mb-4">
       <Link
         to={`/candidates/${candidate.id}`}
         state={{ score: candidate.score }}
-        className="candidate-card-link"
+        className="block no-underline text-inherit"
       >
-        <div className="candidate-card">
+        <div className="border border-border rounded-lg p-4 flex gap-4 items-start cursor-pointer transition-all hover:shadow-md hover:border-border-strong hover:bg-bg-subtle">
           {candidate.photo && (
             <img
               src={candidate.photo}
               alt={candidate.name}
-              className="candidate-card__avatar"
+              className="w-14 h-14 rounded-full object-cover shrink-0"
             />
           )}
-          <div className="candidate-card__body">
-            <div className="candidate-card__header">
-              <strong className="candidate-card__name">{candidate.name}</strong>
+          <div className="flex-1 min-w-0">
+            <div className="flex justify-between items-center flex-wrap gap-2">
+              <strong className="text-[17px] font-semibold text-foreground">{candidate.name}</strong>
               {candidate.score != null && (
                 <span className="badge-accent">
                   {(candidate.score * 100).toFixed(1)}% match
                 </span>
               )}
             </div>
-            <div className="candidate-card__meta">
+            <div className="flex flex-wrap gap-3 mt-1.5 text-[13px] text-foreground-subtle">
               {candidate.location && <span>📍 {candidate.location}</span>}
               {candidate.email && <span>✉️ {candidate.email}</span>}
               {candidate.phone && <span>📞 {candidate.phone}</span>}
             </div>
-            <p className="candidate-card__summary">{candidate.summary}</p>
+            <p className="mt-2 text-sm text-foreground-secondary leading-normal">
+              {candidate.summary}
+            </p>
           </div>
         </div>
       </Link>
@@ -84,10 +85,10 @@ function SearchPage() {
   const isSearchMode = searchResults !== null;
 
   return (
-    <div className="page-container search-page">
-      <div className="search-page__header">
-        <h1 className="search-page__title">Candidate Search</h1>
-        <div className="search-page__header-actions">
+    <div className="page-container mt-[60px] mb-10">
+      <div className="flex justify-between items-center gap-2 mb-2">
+        <h1 className="text-[28px] font-bold m-0">Candidate Search</h1>
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setShowModal(true)}
@@ -98,7 +99,8 @@ function SearchPage() {
           <ThemeToggle />
         </div>
       </div>
-      <p className="search-page__desc text-subtle">
+
+      <p className="text-foreground-subtle mb-6">
         Describe the profile you are looking for in natural language.
       </p>
 
@@ -109,18 +111,20 @@ function SearchPage() {
       <SearchBar onResults={handleResults} onLoading={handleSearchLoading} />
 
       {/* Search results */}
-      {searchLoading && <p style={{ marginTop: "24px" }} className="text-subtle">Searching...</p>}
+      {searchLoading && (
+        <p className="mt-6 text-foreground-subtle">Searching...</p>
+      )}
 
       {!searchLoading && isSearchMode && searchResults.length === 0 && (
-        <p style={{ marginTop: "24px" }} className="text-subtle">No results found.</p>
+        <p className="mt-6 text-foreground-subtle">No results found.</p>
       )}
 
       {!searchLoading && isSearchMode && searchResults.length > 0 && (
         <>
-          <p style={{ marginTop: "24px", marginBottom: "8px", fontSize: "13px" }} className="text-muted">
+          <p className="mt-6 mb-2 text-[13px] text-foreground-muted">
             {searchResults.length} result{searchResults.length !== 1 ? "s" : ""}
           </p>
-          <ul className="candidate-list-results">
+          <ul className="list-none p-0">
             {searchResults.map((candidate) => (
               <CandidateCard key={candidate.id} candidate={candidate} />
             ))}
@@ -132,17 +136,17 @@ function SearchPage() {
       {!isSearchMode && !searchLoading && (
         <>
           {browseLoading ? (
-            <p style={{ marginTop: "24px" }} className="text-subtle">Loading candidates...</p>
+            <p className="mt-6 text-foreground-subtle">Loading candidates...</p>
           ) : (
             <>
-              <ul className="candidate-list">
+              <ul className="list-none p-0 mt-6">
                 {browse.items.map((candidate) => (
                   <CandidateCard key={candidate.id} candidate={candidate} />
                 ))}
               </ul>
 
               {totalPages > 1 && (
-                <div className="pagination">
+                <div className="flex items-center justify-center gap-4 mt-2 mb-10">
                   <button
                     type="button"
                     onClick={() => setPage((p) => p - 1)}
@@ -151,7 +155,7 @@ function SearchPage() {
                   >
                     ← Prev
                   </button>
-                  <span className="pagination__label">
+                  <span className="text-[13px] text-foreground-subtle">
                     Page {page} of {totalPages}
                   </span>
                   <button
